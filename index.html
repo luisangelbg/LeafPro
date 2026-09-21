@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-es="LeafPro — La hoja, carácter por carácter" data-en="LeafPro — The leaf, character by character">LeafPro — La hoja, carácter por carácter</title>
+<meta name="description" content="Leaf morphology for the classroom: parts of the leaf, simple and compound leaves, phyllotaxy, and an atlas of shapes, apices, bases, margins and venation, all drawn by a parametric leaf engine.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-16 -18 32 36'%3E%3Cpath d='M0,16 C -13,6 -12,-8 0,-16 C 12,-8 13,6 0,16 Z' fill='%234a8d3c'/%3E%3Cpath d='M0,14 L0,-13 M0,6 L-6,0 M0,6 L6,0 M0,-2 L-5,-7 M0,-2 L5,-7' stroke='%23e8f4dd' stroke-width='1.6' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/i18n.js"></script>
+</head>
+<body class="on-home">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-row">
+      <div class="brand" id="brand" data-es-title="Inicio" data-en-title="Home">
+        <svg viewBox="-16 -18 32 36" aria-hidden="true"><path d="M0,16 C -13,6 -12,-8 0,-16 C 12,-8 13,6 0,16 Z" fill="var(--leaf)"/><path d="M0,14 L0,-13 M0,6 L-6,0 M0,6 L6,0 M0,-2 L-5,-7 M0,-2 L5,-7" stroke="var(--card-bg)" stroke-width="1.6" fill="none"/></svg>
+        <span>Leaf<span class="brand-pro">Pro</span></span>
+        <span class="brand-sub">· <span data-l="es">la hoja, carácter por carácter</span><span data-l="en">the leaf, character by character</span></span>
+      </div>
+      <div class="top-tools">
+        <div class="seg lang-seg" role="group" aria-label="Idioma / Language">
+          <button data-lang="es" title="Español">ES</button><button data-lang="en" title="English">EN</button>
+        </div>
+        <button class="icon-btn theme-btn" id="themeBtn" data-es-title="Cambiar a tema claro u oscuro" data-en-title="Switch between light and dark theme">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav class="stepper" id="stepper" aria-label="Bloques"></nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ==================== BLOCK 1 · HOME ==================== -->
+<section class="step-panel active" id="panel-1">
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow"><span data-l="es">Morfología vegetal para el aula</span><span data-l="en">Plant morphology for the classroom</span></div>
+        <h1><span data-l="es">La hoja, <span class="accent">carácter</span> por <span class="gold">carácter</span></span><span data-l="en">The leaf, <span class="accent">character</span> by <span class="gold">character</span></span></h1>
+        <p class="lead"><span data-l="es">Forma, ápice, base, margen, nervadura, composición y filotaxia: todos los caracteres con los que
+          la botánica describe una hoja, cada uno con su color en toda la app. Un <b>motor de hojas</b> dibuja cada término del
+          <b>atlas</b>, arma la hoja que tú describas en el <b>constructor</b> y genera las preguntas de la <b>autoevaluación</b>,
+          con ejemplos de plantas de México y cultivos.</span><span data-l="en">Shape, apex, base, margin, venation, composition and phyllotaxy: every character botany uses
+          to describe a leaf, each with its own colour throughout the app. A <b>leaf engine</b> draws every term of the
+          <b>atlas</b>, builds the leaf you describe in the <b>builder</b> and generates the questions of the <b>self-assessment</b>,
+          with examples from Mexican plants and crops.</span></p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" data-go="5"><span data-l="es">Abrir el atlas ↗</span><span data-l="en">Open the atlas ↗</span></button>
+          <button class="btn btn-secondary btn-lg" data-go="6"><span data-l="es">Arma una hoja</span><span data-l="en">Build a leaf</span></button>
+          <button class="btn btn-ghost btn-lg" id="goParts"><span data-l="es">Las partes de la hoja ↓</span><span data-l="en">Parts of the leaf ↓</span></button>
+        </div>
+        <div class="badge-row">
+          <span class="badge ok"><span data-l="es">Funciona sin internet</span><span data-l="en">Works offline</span></span>
+          <span class="badge ok"><span data-l="es">Español e inglés</span><span data-l="en">Spanish and English</span></span>
+          <span class="badge ok"><span data-l="es">Más de 100 términos ilustrados</span><span data-l="en">Over 100 illustrated terms</span></span>
+          <span class="badge ok"><span data-l="es">Dibujos generados, no fotos</span><span data-l="en">Generated drawings, not photos</span></span>
+          <span class="badge ok"><span data-l="es">Para proyectar en clase</span><span data-l="en">Ready to project in class</span></span>
+        </div>
+      </div>
+      <div class="hero-stage">
+        <div id="heroLeaf" role="img" aria-label="Leaves drawn by the leaf engine"></div>
+        <div class="hero-caption" id="heroCaption"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- Parts of the leaf ---------- -->
+  <h2 class="section-title" id="parts"><span data-l="es">La hoja por fuera</span><span data-l="en">The leaf from the outside</span></h2>
+  <p class="section-sub"><span data-l="es">Una hoja completa tiene lámina, pecíolo y, en muchas especies, un par de estípulas. Pasa el cursor
+    (o toca) cada etiqueta para ver qué es y para qué sirve; el Bloque 2 las explica a fondo.</span><span data-l="en">A complete leaf has a blade, a petiole and, in many species, a pair of stipules. Hover over
+    (or tap) each label to see what it is and what it does; Block 2 explains them in depth.</span></p>
+  <div class="parts-wrap card">
+    <div class="parts-stage" id="partsStage"></div>
+    <div class="part-info" id="partsInfo"></div>
+  </div>
+
+  <!-- ---------- The characters ---------- -->
+  <h2 class="section-title"><span data-l="es">Los caracteres de la hoja</span><span data-l="en">The characters of the leaf</span></h2>
+  <p class="section-sub"><span data-l="es">Para describir una hoja, la botánica la separa en caracteres independientes que se combinan
+    libremente. Cada carácter conserva su color en toda la app. Pulsa una tarjeta para ir a sus láminas del atlas.</span><span data-l="en">To describe a leaf, botany splits it into independent characters that combine freely.
+    Each character keeps its colour throughout the app. Click a card to open its plates in the atlas.</span></p>
+  <div class="char-grid" id="charGrid"></div>
+
+  <!-- ---------- Blocks ---------- -->
+  <h2 class="section-title"><span data-l="es">Qué hay en LeafPro</span><span data-l="en">What is in LeafPro</span></h2>
+  <p class="section-sub"><span data-l="es">Ocho bloques pensados para una clase de morfología vegetal.</span><span data-l="en">Eight blocks designed for a plant-morphology class.</span></p>
+  <div class="feature-grid" id="featureGrid"></div>
+
+  <!-- ---------- Theory ---------- -->
+  <h2 class="section-title"><span data-l="es">Para repasar</span><span data-l="en">To review</span></h2>
+  <div id="theory"></div>
+
+  <h2 class="section-title"><span data-l="es">Referencias</span><span data-l="en">References</span></h2>
+  <ol class="refs" id="refs"></ol>
+</section>
+
+<!-- ==================== BLOCK 2 · PARTS ==================== -->
+<section class="step-panel" id="panel-2">
+  <h2 class="blk-title"><span data-l="es">Partes de la hoja</span><span data-l="en">Parts of the leaf</span></h2>
+  <p class="section-sub"><span data-l="es">La hoja típica de una dicotiledónea y la hoja de un pasto no se parecen, pero las dos tienen las
+    mismas funciones. Explora cada modelo con sus etiquetas y compara cómo se une cada hoja al tallo.</span><span data-l="en">The typical dicot leaf and a grass leaf look nothing alike, yet both do the same jobs.
+    Explore each model with its labels and compare how each leaf joins the stem.</span></p>
+  <div class="seg q-tabs" id="b2Tabs" role="tablist">
+    <button data-tab="dicot" class="on"><span data-l="es">Hoja completa (dicotiledónea)</span><span data-l="en">Complete leaf (dicot)</span></button><button data-tab="grass"><span data-l="es">Hoja de pasto (monocotiledónea)</span><span data-l="en">Grass leaf (monocot)</span></button><button data-tab="union"><span data-l="es">Inserción en el tallo</span><span data-l="en">Attachment to the stem</span></button>
+  </div>
+  <div id="b2Dicot"></div>
+  <div id="b2Grass" style="display:none"></div>
+  <div id="b2Union" style="display:none"></div>
+</section>
+
+<!-- ==================== BLOCK 3 · SIMPLE AND COMPOUND ==================== -->
+<section class="step-panel" id="panel-3">
+  <h2 class="blk-title"><span data-l="es">Hoja simple y hoja compuesta</span><span data-l="en">Simple and compound leaves</span></h2>
+  <p class="section-sub"><span data-l="es">Cuando la lámina se divide en piezas independientes (folíolos), la hoja es compuesta. La confusión
+    clásica es tomar cada folíolo por una hoja; aquí está el truco para no equivocarse nunca, y todos los tipos de hoja
+    compuesta dibujados por el motor.</span><span data-l="en">When the blade is divided into independent pieces (leaflets), the leaf is compound. The classic
+    confusion is to take each leaflet for a leaf; here is the trick to never get it wrong, plus every type of compound
+    leaf drawn by the engine.</span></p>
+  <div id="b3Main"></div>
+</section>
+
+<!-- ==================== BLOCK 4 · PHYLLOTAXY ==================== -->
+<section class="step-panel" id="panel-4">
+  <h2 class="blk-title"><span data-l="es">Filotaxia</span><span data-l="en">Phyllotaxy</span></h2>
+  <p class="section-sub"><span data-l="es">La filotaxia es el patrón con que las hojas se acomodan en el tallo. Cada patrón se muestra en
+    vista lateral y desde arriba, y el simulador te deja girar el ángulo de divergencia para descubrir por qué tantas
+    plantas eligen 137.5°.</span><span data-l="en">Phyllotaxy is the pattern in which leaves are arranged on the stem. Each pattern is shown from
+    the side and from above, and the simulator lets you turn the divergence angle to discover why so many plants
+    choose 137.5°.</span></p>
+  <div id="b4Types"></div>
+  <h2 class="section-title"><span data-l="es">El simulador del ángulo de oro</span><span data-l="en">The golden-angle simulator</span></h2>
+  <p class="section-sub"><span data-l="es">Mueve el ángulo de divergencia y observa desde arriba cuánta luz recibe cada hoja. Con ángulos
+    “redondos” (90°, 120°, 180°) las hojas se encimen en columnas; con el ángulo de oro (≈137.5°, relacionado con la serie
+    de Fibonacci) nunca se repite la posición y la roseta aprovecha mejor la luz.</span><span data-l="en">Drag the divergence angle and watch from above how much light each leaf receives. With “round”
+    angles (90°, 120°, 180°) leaves stack into columns; with the golden angle (≈137.5°, linked to the Fibonacci series)
+    positions never repeat and the rosette makes the best use of light.</span></p>
+  <div class="ph-sim card" id="b4Sim"></div>
+</section>
+
+<!-- ==================== BLOCK 5 · ATLAS ==================== -->
+<section class="step-panel" id="panel-5">
+  <h2 class="blk-title"><span data-l="es">Atlas morfológico</span><span data-l="en">Morphology atlas</span></h2>
+  <p class="section-sub"><span data-l="es">Todos los términos con los que se describe una hoja, una lámina por término: definición, ejemplos
+    y un dibujo con el carácter en cuestión resaltado en su color. Pulsa una lámina para verla en grande o ábrela en el
+    constructor para modificarla.</span><span data-l="en">Every term used to describe a leaf, one plate per term: definition, examples and a drawing with
+    the character in question highlighted in its colour. Click a plate to enlarge it, or open it in the builder to
+    modify it.</span></p>
+  <div class="at-layout">
+    <aside class="at-side">
+      <input class="at-search" id="b5Search" type="search" data-es-ph="Buscar: acuminado, peltada…" data-en-ph="Search: acuminate, peltate…" placeholder="Buscar">
+      <nav class="at-nav" id="b5Nav"></nav>
+    </aside>
+    <div class="at-main">
+      <p class="hint" id="b5Empty" style="display:none"><span data-l="es">Ningún término coincide con esa búsqueda.</span><span data-l="en">No term matches that search.</span></p>
+      <div id="b5Main"></div>
+    </div>
+  </div>
+  <dialog class="at-dlg" id="b5Dlg">
+    <div class="at-dlg-h"><h3 id="b5DlgTitle"></h3>
+      <button class="btn btn-secondary btn-sm" id="b5DlgBuild"><span data-l="es">Abrir en el constructor</span><span data-l="en">Open in the builder</span></button>
+      <button class="icon-btn" id="b5DlgClose" data-es-title="Cerrar" data-en-title="Close">×</button></div>
+    <div class="at-dlg-fig">
+      <div id="b5DlgArt"></div>
+      <div class="at-dlg-t" id="b5DlgText"></div>
+    </div>
+  </dialog>
+</section>
+
+<!-- ==================== BLOCK 6 · BUILDER ==================== -->
+<section class="step-panel" id="panel-6">
+  <h2 class="blk-title"><span data-l="es">Arma una hoja</span><span data-l="en">Build a leaf</span></h2>
+  <p class="section-sub"><span data-l="es">Elige un valor para cada carácter y mira cómo el motor redibuja la hoja al instante, junto con su
+    descripción botánica redactada. Es el mismo ejercicio que harás al revés frente a una planta real: de la hoja a los
+    términos.</span><span data-l="en">Pick a value for each character and watch the engine redraw the leaf instantly, together with its
+    written botanical description. It is the same exercise you will do in reverse in front of a real plant: from the
+    leaf to the terms.</span></p>
+  <div class="b6-grid">
+    <div class="b6-ctrl card" id="b6Ctrl"></div>
+    <div class="b6-stage card">
+      <div id="b6Fig"></div>
+      <div class="b6-desc" id="b6Desc"></div>
+      <div class="hero-cta" style="justify-content:center; margin-top:10px">
+        <button class="btn btn-secondary btn-sm" id="b6Random"><span data-l="es">Hoja al azar</span><span data-l="en">Random leaf</span></button>
+        <button class="btn btn-ghost btn-sm" id="b6Export" data-es-title="Descargar el dibujo como SVG" data-en-title="Download the drawing as SVG"><span data-l="es">Descargar SVG</span><span data-l="en">Download SVG</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BLOCK 7 · SELF-ASSESSMENT ==================== -->
+<section class="step-panel" id="panel-7">
+  <h2 class="blk-title"><span data-l="es">Autoevaluación</span><span data-l="en">Self-assessment</span></h2>
+  <p class="section-sub"><span data-l="es">Practica con corrección inmediata. Las preguntas se generan con el motor de hojas, así que nunca
+    se acaban: cada ronda dibuja hojas nuevas.</span><span data-l="en">Practise with instant correction. Questions are generated with the leaf engine, so they never run
+    out: every round draws new leaves.</span></p>
+  <div class="q-modes" id="q7Modes"></div>
+  <div class="q-run" id="q7Run" style="display:none"></div>
+  <div class="q-end" id="q7End" style="display:none"></div>
+</section>
+
+<!-- ==================== BLOCK 8 · CLASSROOM ==================== -->
+<section class="step-panel" id="panel-8">
+  <h2 class="blk-title"><span data-l="es">Modo clase</span><span data-l="en">Classroom</span></h2>
+  <p class="section-sub"><span data-l="es">Proyecta láminas a pantalla completa preguntando al grupo antes de revelar la respuesta, e imprime
+    fichas de estudio con los términos del atlas.</span><span data-l="en">Project plates full screen, asking the class before revealing the answer, and print study sheets
+    with the terms of the atlas.</span></p>
+  <div class="cl-setup" id="p8Setup"></div>
+  <div id="p8Print"></div>
+</section>
+
+</main>
+
+<div class="cl-full" id="clFull">
+  <div class="cl-q" id="clQ"></div>
+  <div class="cl-fig" id="clFig"></div>
+  <div class="cl-a" id="clA"></div>
+  <div class="cl-bar no-print">
+    <span class="cl-count" id="clCount"></span>
+    <button class="btn btn-secondary" id="clReveal"><span data-l="es">Revelar (espacio)</span><span data-l="en">Reveal (space)</span></button>
+    <button class="btn btn-primary" id="clNext"><span data-l="es">Siguiente (→)</span><span data-l="en">Next (→)</span></button>
+    <button class="btn btn-ghost" id="clExit"><span data-l="es">Salir (Esc)</span><span data-l="en">Exit (Esc)</span></button>
+  </div>
+</div>
+
+<footer class="foot">
+  <span data-l="es">LeafPro 1.0.0 · software libre (GPL-3.0) · funciona completo en tu navegador, sin conexión.</span>
+  <span data-l="en">LeafPro 1.0.0 · free software (GPL-3.0) · runs entirely in your browser, offline.</span>
+  · <a href="#" id="aboutBtn"><span data-l="es">Acerca de LeafPro y cómo citarla</span><span data-l="en">About LeafPro and how to cite it</span></a>
+</footer>
+<dialog class="at-dlg about-dlg" id="aboutDlg">
+  <div class="at-dlg-h"><h3>LeafPro 1.0.0</h3><button class="icon-btn" id="aboutClose" data-es-title="Cerrar" data-en-title="Close">×</button></div>
+  <div class="about-b">
+    <p><span data-l="es"><b>La hoja, carácter por carácter.</b> Una aplicación para enseñar la morfología de la hoja: sus partes,
+      la diferencia entre hojas simples y compuestas, la filotaxia, y un atlas de formas, ápices, bases, márgenes,
+      nervaduras, inserciones y superficies, con un constructor de hojas, autoevaluación generativa y modo clase.
+      Todos los dibujos los genera un motor paramétrico de hojas dentro de la propia aplicación.</span><span data-l="en"><b>The leaf, character by character.</b> An app for teaching leaf morphology: its parts, the
+      difference between simple and compound leaves, phyllotaxy, and an atlas of shapes, apices, bases, margins,
+      venations, attachments and surfaces, with a leaf builder, generative self-assessment and a classroom mode.
+      Every drawing is generated by a parametric leaf engine inside the app itself.</span></p>
+    <p><span data-l="es">Todo funciona dentro del navegador, sin servidor y sin conexión; nada de lo que haces sale de tu computadora.</span><span data-l="en">Everything runs inside the browser, without a server or a connection; nothing you do leaves your computer.</span></p>
+    <h4><span data-l="es">Cómo citarla</span><span data-l="en">How to cite it</span></h4>
+    <p class="about-cite" id="aboutCite">Barrera-Guzmán, L. Á. (2026). <i>LeafPro: la hoja, carácter por carácter</i> (<span data-l="es">versión</span><span data-l="en">version</span> 1.0.0) [Software]. https://github.com/luisangelbg/LeafPro</p>
+    <button class="btn btn-ghost btn-sm" id="aboutCopy"><span data-l="es">Copiar la cita</span><span data-l="en">Copy the citation</span></button>
+    <h4><span data-l="es">Autor y licencia</span><span data-l="en">Author and licence</span></h4>
+    <p>Luis Ángel Barrera-Guzmán · ORCID <a href="https://orcid.org/0000-0001-8057-2583" target="_blank" rel="noopener">0000-0001-8057-2583</a><br>
+      <span data-l="es">Software libre bajo la licencia GNU GPL, versión 3 o posterior (archivo LICENSE).</span><span data-l="en">Free software under the GNU GPL licence, version 3 or later (file LICENSE).</span></p>
+  </div>
+</dialog>
+
+<script src="js/core.js"></script>
+<script src="js/leafgen.js"></script>
+<script src="js/morphdata.js"></script>
+<script src="js/parts.js"></script>
+<script src="js/home.js"></script>
+<script src="js/block2.js"></script>
+<script src="js/block3.js"></script>
+<script src="js/block4.js"></script>
+<script src="js/block5.js"></script>
+<script src="js/block6.js"></script>
+<script src="js/block7.js"></script>
+<script src="js/block8.js"></script>
+</body>
+</html>
