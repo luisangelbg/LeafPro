@@ -4,8 +4,8 @@
 # Luego abre  http://localhost:9500  en el navegador.
 #
 # LeafPro calcula todo en JavaScript y trae sus datos incrustados, asi que
-# el doble clic en index.html funciona igual. Este servidor sirve para guardar
-# mas fotos propias (Bloque 8) y para abrir la app desde otro equipo de la red.
+# el doble clic en index.html funciona igual. Este servidor sirve para abrir
+# la app desde otro equipo de la red o cuando el file:// esta bloqueado.
 #
 # Para abrirlo tambien desde un telefono o una tableta en
 # la MISMA red WiFi: ejecuta este script como Administrador (clic derecho >
