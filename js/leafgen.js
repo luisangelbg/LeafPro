@@ -59,22 +59,20 @@
   /* Apices: wf(t’) reshapes the half-width in the apex zone (t’ = 0 at the
      start of the zone, 1 at the tip); some add a notch or an appendage. */
   const APICES = {
-    agudo:      { za: 0.24, wf: u => 1 - 0.12 * u },
-    acuminado:  { za: 0.34, wf: u => Math.pow(1 - u, 0.62) / Math.pow(1 - u, 1) * (1 - u) ** 0.62 || 1, tip: 0.1 },
-    obtuso:     { za: 0.2,  wf: u => Math.pow(1 - u * u * 0.4, 0.5) + 0.28 * Math.sin(Math.PI * u) },
+    agudo:      { za: 0.24, wf: u => 1 - u },
+    acuminado:  { za: 0.34, wf: u => Math.pow(1 - u, 0.62), tip: 0.1 },
+    obtuso:     { za: 0.2,  wf: u => Math.pow(1 - u, 0.5) },
     redondeado: { za: 0.22, round: true },
     truncado:   { za: 0.1,  trunc: 0.86 },
     emarginado: { za: 0.16, notch: 0.14, round: true },
     retuso:     { za: 0.12, notch: 0.05, round: true },
     mucronado:  { za: 0.2,  round: true, mucro: 0.055 },
     apiculado:  { za: 0.2,  round: true, mucro: 0.09, soft: true },
-    cuspidado:  { za: 0.26, wf: u => 0.75 + 0.25 * Math.cos(Math.PI * u), tip: 0.12 },
-    aristado:   { za: 0.2,  wf: u => 1 - 0.2 * u, arista: 0.2 },
+    cuspidado:  { za: 0.26, wf: u => Math.pow(1 - u, 0.35), tip: 0.12 },
+    aristado:   { za: 0.2,  wf: u => Math.pow(1 - u, 0.75), arista: 0.2 },
     caudado:    { za: 0.4,  wf: u => Math.pow(1 - u, 0.5), tip: 0.24 },
-    pungente:   { za: 0.24, wf: u => 1 - 0.1 * u, spineTip: true },
+    pungente:   { za: 0.24, wf: u => Math.pow(1 - u, 0.85), spineTip: true },
   };
-  /* fixed, smooth apex profile for acuminado */
-  APICES.acuminado.wf = u => Math.pow(1 - u, 0.62);
 
   /* Bases: either reshape the width near the base, or add basal lobes that
      hang below the insertion. zb = length of the basal zone (as t). */
@@ -460,7 +458,8 @@
     md = Object.assign({}, { apex: sh.apex || 'agudo', base: sh.base || 'cuneada', margin: 'entero', venation: sh.venation || 'craspedodroma', petiole: 0.28 }, md);
     if (md.base === 'peltada') md.peltate = true;
     const L = 100;
-    const W = L / (md.ar || sh.ar || 2);
+    let W = L / (md.ar || sh.ar || 2);
+    if (md.lobing && md.lobing.mode === 'palmati') W = Math.max(W, L / 1.25);
     const g = bladeGeometry(md, L, W);
     const blade = toPath(g.right, true) + toPath([...g.left].reverse(), true).replace(/^M/, 'L') + 'Z';
     const veins = veinPaths(md, L, W, g.right, g.left, uid);

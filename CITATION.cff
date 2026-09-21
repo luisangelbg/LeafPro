@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "LeafPro: la hoja, carácter por carácter — a browser-based app for teaching leaf morphology"
+abstract: >-
+  LeafPro is a self-contained web application for teaching leaf morphology, entirely in the
+  browser, with no installation and no server. A parametric leaf engine draws every figure in
+  the app from a small model (blade shape × apex × base × margin × pinnate or palmate lobing ×
+  venation), including compound leaves and leaf surfaces. It covers the parts of the dicot and
+  grass leaf, simple versus compound leaves with the axillary-bud test, phyllotaxy with a
+  golden-angle simulator, an atlas of more than 110 illustrated terms with definitions and
+  example species with an emphasis on Mexico, a leaf builder that writes the botanical
+  description as characters are combined, generative self-assessment, and a classroom mode
+  for projecting question-first plates and printing study or exam sheets. The interface is in
+  Spanish and English, with a light and a dark theme.
+type: software
+authors:
+  - given-names: "Luis Ángel"
+    family-names: "Barrera-Guzmán"
+    email: lbarrerag@chapingo.mx
+    orcid: "https://orcid.org/0000-0001-8057-2583"
+version: 1.0.0
+date-released: 2026-09-21
+url: "https://github.com/luisangelbg/LeafPro"
+repository-code: "https://github.com/luisangelbg/LeafPro"
+license: GPL-3.0-or-later
+keywords:
+  - leaf morphology
+  - plant morphology
+  - botany education
+  - phyllotaxy
+  - leaf architecture
+  - teaching software
+  - Spanish

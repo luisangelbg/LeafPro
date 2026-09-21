@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LeafPro — pruebas</title>
+<style>
+  body { font-family: ui-monospace, monospace; font-size: 13px; margin: 20px; background: #fafcf7; color: #1c241a; }
+  h1 { font-size: 18px; }
+  .ok { color: #2f8f4a; } .fail { color: #c43a2f; font-weight: bold; }
+  #summary { font-size: 15px; font-weight: bold; margin: 12px 0; }
+  li { margin: 1px 0; }
+</style>
+<script src="../js/i18n.js"></script>
+</head>
+<body>
+<h1>LeafPro — suite de pruebas</h1>
+<div id="summary">Ejecutando…</div>
+<ol id="out"></ol>
+<script src="../js/core.js"></script>
+<script src="../js/leafgen.js"></script>
+<script src="../js/morphdata.js"></script>
+<script src="../js/parts.js"></script>
+<script src="../js/block4.js"></script>
+<script src="../js/block7.js"></script>
+<script>
+const out = document.getElementById('out');
+let pass = 0, fail = 0;
+function ok(cond, msg) {
+  const li = document.createElement('li');
+  li.className = cond ? 'ok' : 'fail';
+  li.textContent = (cond ? '✓ ' : '✗ ') + msg;
+  if (!cond || location.search.includes('all')) out.appendChild(li);
+  cond ? pass++ : fail++;
+}
+function parseSVG(s) {
+  const doc = new DOMParser().parseFromString(s, 'image/svg+xml');
+  return doc.querySelector('parsererror') ? null : doc.documentElement;
+}
+
+/* ---------- 1. the morphological database ---------- */
+ok(MORPH.cats.length === 9, 'hay 9 categorías de caracteres');
+const ids = new Set();
+const catKeys = MORPH.cats.map(c => c.key);
+ok(MORPH.terms.length >= 100, `hay al menos 100 términos (${MORPH.terms.length})`);
+for (const t of MORPH.terms) {
+  ok(!ids.has(t.id), `id único: ${t.id}`);
+  ids.add(t.id);
+  ok(catKeys.includes(t.cat), `${t.id}: categoría válida (${t.cat})`);
+  ok(!!t.es && !!t.en, `${t.id}: nombre en los dos idiomas`);
+  ok(!!t.def.es && !!t.def.en, `${t.id}: definición en los dos idiomas`);
+  ok(!!t.ex.es && !!t.ex.en, `${t.id}: ejemplos en los dos idiomas`);
+  ok(t.def.es.length > 20 && t.def.en.length > 20, `${t.id}: definiciones con sustancia`);
+}
+for (const c of catKeys) ok(MORPH.byCat(c).length >= 7, `categoría ${c} con al menos 7 términos (${MORPH.byCat(c).length})`);
+ok(MORPH.byId('f-ovada') && MORPH.byId('f-ovada').es === 'Ovada', 'byId encuentra f-ovada');
+
+/* every model references existing engine keys */
+for (const t of MORPH.terms) {
+  const m = t.model || {};
+  if (m.shape) ok(!!Leaf.SHAPES[m.shape], `${t.id}: forma «${m.shape}» existe en el motor`);
+  if (m.apex) ok(!!Leaf.APICES[m.apex], `${t.id}: ápice «${m.apex}» existe en el motor`);
+  if (m.base) ok(!!Leaf.BASES[m.base], `${t.id}: base «${m.base}» existe en el motor`);
+  if (m.margin) ok(m.margin in Leaf.MARGINS, `${t.id}: margen «${m.margin}» existe en el motor`);
+  if (m.venation) ok(Leaf.VENATIONS.includes(m.venation) || m.venation === 'pinnada', `${t.id}: nervadura «${m.venation}» válida`);
+}
+
+/* ---------- 2. the leaf engine ---------- */
+/* beta profile peaks at tp and vanishes at the ends */
+for (const tp of [0.3, 0.5, 0.7]) {
+  const b = x => Leaf._beta(x, tp, 2.5);
+  ok(Math.abs(b(tp) - 1) < 1e-9, `beta(tp=${tp}) = 1 en el pico`);
+  ok(b(0.0001) < 0.05 && b(0.9999) < 0.05, `beta(tp=${tp}) se anula en los extremos`);
+  ok(b(tp) >= b(tp - 0.15) && b(tp) >= b(tp + 0.15), `beta(tp=${tp}) es máximo local`);
+}
+
+/* every atlas term renders to valid SVG with a blade and a viewBox */
+for (const t of MORPH.terms) {
+  let svg = null, err = null;
+  try {
+    svg = t.compound ? Leaf.compound(t.compound, {}) : Leaf.svg(t.model, { highlight: t.hl, skin: t.skin });
+  } catch (e) { err = e; }
+  ok(!err, `${t.id}: el motor no lanza error${err ? ' — ' + err.message : ''}`);
+  if (err) continue;
+  const el2 = parseSVG(svg);
+  ok(!!el2, `${t.id}: SVG bien formado`);
+  if (!el2) continue;
+  const vb = (el2.getAttribute('viewBox') || '').split(/\s+/).map(Number);
+  ok(vb.length === 4 && vb.every(x => isFinite(x)) && vb[2] > 0 && vb[3] > 0, `${t.id}: viewBox válido`);
+  ok(svg.includes('lf-blade') || svg.includes('lf-rachis'), `${t.id}: tiene lámina o raquis`);
+  ok(!svg.includes('NaN'), `${t.id}: sin NaN en el dibujo`);
+}
+
+/* the blade path is closed and mirrored */
+{
+  const g = Leaf._bladeGeometry({ shape: 'eliptica', apex: 'agudo', base: 'cuneada', margin: 'entero' }, 100, 50);
+  ok(g.right.length > 50 && g.left.length > 50, 'las dos mitades tienen suficientes puntos');
+  ok(Math.abs(g.right[g.right.length - 1][0]) < 1.5, 'la mitad derecha termina en el ápice (x≈0)');
+  ok(g.right.every(p => p[0] > -1e-6), 'mitad derecha con x ≥ 0');
+  ok(g.left.every(p => p[0] < 1e-6), 'mitad izquierda con x ≤ 0');
+  ok(g.right[0][1] < 2, 'la mitad derecha empieza en la base (y≈0)');
+}
+/* margins: teeth reduce or keep the width, never explode it */
+for (const mg of ['aserrado', 'dentado', 'crenado', 'biserrado', 'espinoso', 'sinuado']) {
+  const plain = Leaf._bladeGeometry({ shape: 'eliptica', margin: 'entero' }, 100, 50);
+  const tooth = Leaf._bladeGeometry({ shape: 'eliptica', margin: mg }, 100, 50);
+  const maxP = Math.max(...plain.right.map(p => p[0]));
+  const maxT = Math.max(...tooth.right.map(p => p[0]));
+  ok(maxT < maxP * 1.35, `margen ${mg}: los dientes no disparan el ancho (${maxT.toFixed(1)} vs ${maxP.toFixed(1)})`);
+  ok(tooth.right.length === plain.right.length, `margen ${mg}: conserva el número de puntos`);
+}
+/* pinnate lobing cuts into the blade */
+{
+  const plain = Leaf._bladeGeometry({ shape: 'eliptica', margin: 'entero' }, 100, 50);
+  const lobed = Leaf._bladeGeometry({ shape: 'eliptica', margin: 'entero', lobing: { mode: 'pinnati', n: 4, depth: 0.7, sharp: 0.4 } }, 100, 50);
+  const minMidP = Math.min(...plain.right.filter(p => p[2] > 0.3 && p[2] < 0.7).map(p => p[0]));
+  const minMidL = Math.min(...lobed.right.filter(p => p[2] > 0.3 && p[2] < 0.7).map(p => p[0]));
+  ok(minMidL < minMidP * 0.6, 'la lobulación pinnada recorta la semilámina');
+}
+/* palmate lobing produces radial lobes on both sides */
+{
+  const g = Leaf._bladeGeometry({ shape: 'orbicular', lobing: { mode: 'palmati', n: 3, depth: 0.7, sharp: 0.5 }, venation: 'palmada' }, 100, 90);
+  ok(g.right.length > 80, 'palmada: mitad derecha muestreada');
+  const rs = g.right.map(p => Math.hypot(p[0], p[1]));
+  let peaks = 0;
+  for (let i = 2; i < rs.length - 2; i++) if (rs[i] > rs[i - 2] + 2 && rs[i] > rs[i + 2] + 2) peaks++;
+  ok(peaks >= 2, `palmada: se detectan lóbulos radiales (${peaks} picos)`);
+  const tip = g.right[g.right.length - 1];
+  ok(Math.abs(tip[0]) < 2 && tip[1] > 90, 'palmada: termina en el ápice del lóbulo central');
+}
+/* venation stays inside sensible bounds */
+for (const v of ['craspedodroma', 'camptodroma', 'broquidodroma', 'palmada', 'paralela', 'curvinervia', 'dicotomica', 'uninervia']) {
+  const svg = Leaf.svg({ shape: v === 'palmada' ? 'cordiforme' : 'eliptica', venation: v }, {});
+  ok(parseSVG(svg) && !svg.includes('NaN'), `nervadura ${v}: dibujo válido`);
+}
+/* compound leaves: every type renders leaflets */
+for (const type of ['imparipinnada', 'paripinnada', 'bipinnada', 'trifoliolada', 'palmaticompuesta', 'unifoliolada', 'interrumpida']) {
+  const svg = Leaf.compound({ type, n: 4, leaflet: { shape: 'eliptica' } }, {});
+  const el2 = parseSVG(svg);
+  ok(!!el2, `compuesta ${type}: SVG bien formado`);
+  const blades = (svg.match(/lf-blade/g) || []).length;
+  ok(blades >= (type === 'unifoliolada' ? 1 : 3), `compuesta ${type}: al menos ${type === 'unifoliolada' ? 1 : 3} folíolos (${blades})`);
+  ok(svg.includes('lf-rachis'), `compuesta ${type}: tiene raquis`);
+}
+/* odd vs even pinnate: terminal leaflet present or absent */
+{
+  const odd = (Leaf.compound({ type: 'imparipinnada', n: 3, leaflet: { shape: 'eliptica' } }, {}).match(/lf-blade/g) || []).length;
+  const even = (Leaf.compound({ type: 'paripinnada', n: 3, leaflet: { shape: 'eliptica' } }, {}).match(/lf-blade/g) || []).length;
+  ok(odd === even + 1, `imparipinnada tiene un folíolo más que paripinnada (${odd} vs ${even})`);
+}
+/* highlights */
+ok(Leaf.svg({ shape: 'eliptica' }, { highlight: 'apice' }).includes('hl-apice'), 'resaltado del ápice presente');
+ok(Leaf.svg({ shape: 'eliptica' }, { highlight: 'base' }).includes('hl-base'), 'resaltado de la base presente');
+ok(Leaf.svg({ shape: 'eliptica' }, { highlight: 'margen' }).includes('hl-margen'), 'resaltado del margen presente');
+ok(Leaf.svg({ shape: 'eliptica' }, { highlight: 'nervadura' }).includes('hl-veins'), 'resaltado de la nervadura presente');
+/* skins */
+for (const s of ['pubescente', 'tomentosa', 'hirsuta', 'escabrosa']) {
+  ok(Leaf.svg({ shape: 'eliptica' }, { skin: s }).includes('lf-fuzz'), `superficie ${s}: dibuja pelos`);
+}
+ok(Leaf.svg({ shape: 'eliptica' }, { skin: 'discolora' }).includes('lf-underside'), 'discolora: muestra el envés');
+/* special structures */
+ok(Leaf.svg({ shape: 'ovada', stipules: true }, {}).includes('lf-stipule'), 'estípulas dibujadas');
+ok(Leaf.svg({ shape: 'linear', base: 'envainadora', ligule: true, petiole: 0 }, {}).includes('lf-sheath'), 'vaina dibujada');
+ok(Leaf.svg({ shape: 'orbicular', base: 'peltada' }, {}).includes('lf-pelt'), 'inserción peltada marcada');
+ok(Leaf.svg({ shape: 'eliptica', apex: 'mucronado' }, {}).includes('lf-mucro'), 'mucrón dibujado');
+ok(Leaf.svg({ shape: 'eliptica', apex: 'aristado' }, {}).includes('lf-arista'), 'arista dibujada');
+ok(Leaf.svg({ shape: 'oblonga', base: 'amplexicaule' }, {}).includes('lf-stem'), 'amplexicaule dibuja el tallo');
+
+/* ---------- 3. phyllotaxy renderers ---------- */
+for (const t of MORPH.byCat('filotaxia')) {
+  const sv = B4.sideView(t.phyllo), tv = B4.topView(t.phyllo);
+  ok(parseSVG(sv) && !sv.includes('NaN'), `${t.id}: vista lateral válida`);
+  ok(parseSVG(tv) && !tv.includes('NaN'), `${t.id}: vista superior válida`);
+}
+/* distichous side view must show real leaves, not only stubs */
+{
+  const sv = B4.sideView({ mode: 'spiral', angle: 180 });
+  ok((sv.match(/lf-blade/g) || []).length >= 4, 'alterna dística: dibuja hojas en zigzag');
+}
+
+/* ---------- 4. quiz generators ---------- */
+for (let i = 0; i < 40; i++) {
+  const q = B7.qFigureToTerm(['forma', 'apice', 'base', 'margen', 'nervadura', 'compo', 'filotaxia']);
+  ok(q.options.length === 4, `pregunta figura→término ${i}: 4 opciones`);
+  ok(q.options.filter(o => o.ok).length === 1, `pregunta figura→término ${i}: exactamente 1 correcta`);
+  ok(new Set(q.options.map(o => o.txt)).size === 4, `pregunta figura→término ${i}: opciones distintas`);
+  ok(!!q.fig && !!q.exp, `pregunta figura→término ${i}: figura y explicación`);
+}
+for (let i = 0; i < 25; i++) {
+  const q = B7.qTermToFigure(['forma', 'margen', 'compo']);
+  ok(q.figOptions.length === 4 && q.figOptions.filter(o => o.ok).length === 1, `pregunta término→figura ${i}: 4 figuras, 1 correcta`);
+}
+for (let i = 0; i < 25; i++) {
+  const q = B7.qDescribe();
+  ok(q.options.length === 4 && q.options.filter(o => o.ok).length === 1, `pregunta describe ${i}: 4 opciones, 1 correcta`);
+  ok(!q.fig.includes('lf-hl'), `pregunta describe ${i}: la figura no trae resaltados que delaten`);
+}
+
+/* ---------- 5. parts diagrams ---------- */
+{
+  const keys = Object.keys(Parts.DEFS);
+  ok(keys.length >= 16, `diagrama de partes: ${keys.length} definiciones`);
+  for (const k of keys) {
+    const p = Parts.DEFS[k];
+    ok(!!p.es && !!p.en && !!p.d.es && !!p.d.en, `parte ${k}: bilingüe completa`);
+  }
+}
+
+/* ---------- summary ---------- */
+document.getElementById('summary').innerHTML =
+  `<span class="${fail ? 'fail' : 'ok'}">${pass} pruebas superadas, ${fail} fallidas</span>` +
+  (location.search.includes('all') ? '' : ' — añade <code>?all</code> a la URL para listar también las superadas.');
+document.title = `LeafPro — ${pass} ✓ / ${fail} ✗`;
+</script>
+</body>
+</html>
