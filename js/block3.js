@@ -7,12 +7,12 @@
   function trickSVG() {
     const leaf = Leaf.compound({ type: 'imparipinnada', n: 3, leaflet: { shape: 'eliptica', margin: 'aserrado' } }, {});
     const inner = leaf.replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '');
-    return `<svg viewBox="-150 -170 300 320" class="leaf" role="img">
+    return `<svg viewBox="-150 -172 300 348" class="leaf" role="img">
       <rect x="-64" y="-160" width="9" height="310" rx="4" fill="var(--border-strong)"/>
       <g transform="translate(-58,64) rotate(58) scale(0.9)">${inner}</g>
       <circle cx="-51" cy="52" r="6" fill="var(--accent)" stroke="var(--card-bg)" stroke-width="1.6"/>
-      <g class="part-label"><line x1="-46" y1="48" x2="30" y2="24"/><text x="34" y="26" font-weight="700">${T('yema axilar: aquí empieza la HOJA', 'axillary bud: the LEAF starts here')}</text></g>
-      <g class="part-label"><line x1="38" y1="118" x2="70" y2="146"/><text x="6" y="160">${T('folíolos: sin yema en su base', 'leaflets: no bud at their base')}</text></g>
+      <g class="part-label"><line x1="-46" y1="48" x2="30" y2="24"/><text x="34" y="21" font-weight="700"><tspan x="34" dy="0">${T('yema axilar:', 'axillary bud:')}</tspan><tspan x="34" dy="12">${T('aquí empieza la HOJA', 'the LEAF starts here')}</tspan></text></g>
+      <g class="part-label"><line x1="38" y1="118" x2="66" y2="142"/><text x="30" y="156"><tspan x="30" dy="0">${T('folíolos: sin yema', 'leaflets: no bud')}</tspan><tspan x="30" dy="12">${T('en su base', 'at their base')}</tspan></text></g>
       <g class="part-label"><line x1="10" y1="86" x2="60" y2="86"/><text x="64" y="89">${T('raquis', 'rachis')}</text></g>
     </svg>`;
   }

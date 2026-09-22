@@ -65,7 +65,7 @@
     cuticula: { es: 'Cutícula', en: 'Cuticle', lat: 'cuticula',
       d: { es: 'Película de cutina y ceras que sella la epidermis contra la pérdida de agua; suele ser más gruesa y brillante en el haz.',
            en: 'A film of cutin and waxes sealing the epidermis against water loss; usually thicker and shinier on the upper face.' } },
-    epidermis_haz: { es: 'Epidermis del haz', en: 'Upper (adaxial) epidermis', lat: 'epidermis adaxialis',
+    epidermis_haz: { es: 'Epidermis del haz', en: 'Upper (adaxial) epidermis', lbl: { es: 'Epidermis del haz', en: 'Upper epidermis' }, lat: 'epidermis adaxialis',
       d: { es: 'Una capa de células transparentes y sin cloroplastos que deja pasar la luz y protege el mesófilo. En el haz suele carecer de estomas.',
            en: 'A single layer of transparent, chloroplast-free cells letting light through and protecting the mesophyll. On the upper face it usually lacks stomata.' } },
     empalizada: { es: 'Parénquima en empalizada', en: 'Palisade parenchyma', lat: 'parenchyma palisadeum',
@@ -77,7 +77,7 @@
     aire: { es: 'Espacios de aire', en: 'Air spaces', lat: 'aerenchyma',
       d: { es: 'Huecos entre las células esponjosas por donde circulan CO₂, O₂ y vapor de agua; desembocan en las cámaras subestomáticas.',
            en: 'Gaps between spongy cells where CO₂, O₂ and water vapour circulate; they open into the substomatal chambers.' } },
-    haz_vascular: { es: 'Haz vascular (vena)', en: 'Vascular bundle (vein)', lat: 'fasciculus vascularis',
+    haz_vascular: { es: 'Haz vascular (vena)', en: 'Vascular bundle (vein)', lbl: { es: 'Haz vascular (vena)', en: 'Vascular bundle' }, lat: 'fasciculus vascularis',
       d: { es: 'Una vena vista en corte: xilema hacia el haz y floema hacia el envés, envueltos por la vaina del haz. Es la fontanería y el esqueleto de la hoja.',
            en: 'A vein in section: xylem towards the upper face and phloem towards the lower, wrapped by the bundle sheath. The plumbing and skeleton of the leaf.' } },
     xilema: { es: 'Xilema', en: 'Xylem', lat: 'xylema',
@@ -95,10 +95,10 @@
     camara: { es: 'Cámara subestomática', en: 'Substomatal chamber', lat: 'camera substomatica',
       d: { es: 'El hueco de aire justo detrás del estoma, donde los gases se reparten hacia el mesófilo.',
            en: 'The air pocket right behind the stoma, where gases are distributed to the mesophyll.' } },
-    epidermis_enves: { es: 'Epidermis del envés', en: 'Lower (abaxial) epidermis', lat: 'epidermis abaxialis',
+    epidermis_enves: { es: 'Epidermis del envés', en: 'Lower (abaxial) epidermis', lbl: { es: 'Epidermis del envés', en: 'Lower epidermis' }, lat: 'epidermis abaxialis',
       d: { es: 'La capa que cubre la cara inferior: con más estomas, cutícula más delgada y, en muchas especies, pelos.',
            en: 'The layer covering the lower face: with more stomata, a thinner cuticle and, in many species, hairs.' } },
-    tricoma: { es: 'Tricoma (pelo)', en: 'Trichome (hair)', lat: 'trichoma',
+    tricoma: { es: 'Tricoma (pelo)', en: 'Trichome (hair)', lbl: { es: 'Tricoma (pelo)', en: 'Trichome' }, lat: 'trichoma',
       d: { es: 'Pelo epidérmico: refleja el exceso de luz, frena el viento junto a los estomas y estorba a los herbívoros pequeños. Su densidad define términos como pubescente o tomentosa.',
            en: 'An epidermal hair: it reflects excess light, slows the wind near the stomata and hinders small herbivores. Its density defines terms such as pubescent or tomentose.' } },
   };
@@ -119,19 +119,19 @@
     ['tallo', -1, 106, -40, 104, 'end'],
   ];
   const SECTION_LABELS = [
-    ['cuticula', 40, -64, 108, -66, 'start'],
-    ['empalizada', 60, -30, 108, -36, 'start'],
-    ['aire', 20, 16, 108, -8, 'start'],
-    ['camara', 54, 26, 108, 16, 'start'],
-    ['estoma', 54, 40, 108, 40, 'start'],
-    ['oclusivas', 46, 41, 108, 60, 'start'],
-    ['epidermis_haz', -60, -55, -108, -58, 'end'],
-    ['haz_vascular', -40, -14, -108, -28, 'end'],
-    ['xilema', -44, -2, -108, -2, 'end'],
-    ['floema', -41, 12, -108, 22, 'end'],
-    ['esponjoso', -84, 14, -108, 44, 'end'],
-    ['epidermis_enves', -18, 37, -108, 66, 'end'],
-    ['tricoma', -66, 56, -108, 86, 'end'],
+    ['cuticula', 40, -64, 112, -66, 'start'],
+    ['empalizada', 60, -30, 112, -38, 'start'],
+    ['aire', 24, 14, 112, -10, 'start'],
+    ['camara', 54, 26, 112, 16, 'start'],
+    ['estoma', 53, 44, 112, 42, 'start'],
+    ['oclusivas', 46, 39, 112, 66, 'start'],
+    ['epidermis_haz', -60, -55, -112, -62, 'end'],
+    ['haz_vascular', -47, -11, -112, -36, 'end'],
+    ['xilema', -44, -3, -112, -10, 'end'],
+    ['floema', -41, 12, -112, 12, 'end'],
+    ['esponjoso', -84, 18, -112, 36, 'end'],
+    ['epidermis_enves', -70, 37, -112, 62, 'end'],
+    ['tricoma', -62, 56, -112, 86, 'end'],
   ];
 
   const GRASS_LABELS = [
@@ -207,24 +207,49 @@
     S.push(`<path d="M51.5,36 L54.5,36 M51.5,40 L54.5,40" stroke="var(--lfOutline)" stroke-width="1.2"/>`);
     /* trichome on the underside */
     S.push(`<path d="M-66,45 C -70,54 -66,62 -58,68 M-46,45 C -48,52 -45,58 -40,62" stroke="var(--lfVein)" stroke-width="1.6" fill="none" stroke-linecap="round"/>`);
-    /* haz / envés banners */
-    S.push(`<text x="0" y="-80" text-anchor="middle" font-size="10" font-weight="800" fill="var(--primary)">${T('HAZ (cara adaxial) — mira al sol', 'HAZ / upper (adaxial) face — faces the sun')}</text>`);
-    S.push(`<text x="0" y="64" text-anchor="middle" font-size="10" font-weight="800" fill="var(--cB)">${T('ENVÉS (cara abaxial) — mira al suelo', 'ENVÉS / lower (abaxial) face — faces the ground')}</text>`);
-    S.push(`<path d="M-96,-74 l 0,-8 M-96,-74 l 192,0 M96,-74 l 0,-8" stroke="var(--text-muted)" stroke-width="1" fill="none" opacity=".5"/>`);
+    /* haz / envés banners, clear of the labels */
+    S.push(`<text x="0" y="-82" text-anchor="middle" font-size="10" font-weight="800" fill="var(--primary)">${T('HAZ (cara adaxial) — mira al sol', 'HAZ — upper (adaxial) face')}</text>`);
+    S.push(`<path d="M-96,-70 l 0,-6 M-96,-70 l 192,0 M96,-70 l 0,-6" stroke="var(--text-muted)" stroke-width="1" fill="none" opacity=".5"/>`);
+    S.push(`<text x="0" y="90" text-anchor="middle" font-size="10" font-weight="800" fill="var(--cB)">${T('ENVÉS (cara abaxial) — mira al suelo', 'ENVÉS — lower (abaxial) face')}</text>`);
+    S.push(`<path d="M-96,78 l 0,6 M-96,78 l 192,0 M96,78 l 0,6" stroke="var(--text-muted)" stroke-width="1" fill="none" opacity=".5"/>`);
     return S.join('');
+  }
+
+  /* long label names are wrapped onto several tspan lines so they never
+     spill over the figure, the info panel or one another */
+  function wrapLabel(name, x, y, anchor, maxChars) {
+    const words = String(name).split(' ');
+    const lines = [];
+    let cur = '';
+    for (const w of words) {
+      if (cur && (cur + ' ' + w).length > maxChars) { lines.push(cur); cur = w; }
+      else cur = cur ? cur + ' ' + w : w;
+    }
+    if (cur) lines.push(cur);
+    const y0 = y - (lines.length - 1) * 5.5;
+    return {
+      html: `<text x="${x}" y="${y0}" text-anchor="${anchor === 'end' ? 'end' : 'start'}">` +
+        lines.map((l, i) => `<tspan x="${x}" dy="${i ? 11 : 0}">${l}</tspan>`).join('') + '</text>',
+      lines: lines.length,
+    };
   }
 
   function render(stageEl, infoEl, which) {
     const labels = which === 'grass' ? GRASS_LABELS : which === 'section' ? SECTION_LABELS : DICOT_LABELS;
     const scene = which === 'grass' ? grassScene() : which === 'section' ? sectionScene() : dicotScene();
-    const vb = which === 'grass' ? '-110 -120 240 240' : which === 'section' ? '-200 -100 400 200' : '-120 -128 250 260';
-    const lab = labels.map(([k, x, y, tx, ty, an]) => `
+    const vb = which === 'grass' ? '-125 -120 260 240' : which === 'section' ? '-212 -100 424 200' : '-160 -128 300 260';
+    const maxChars = which === 'section' ? 14 : 15;
+    const lab = labels.map(([k, x, y, tx, ty, an]) => {
+      const src = P[k].lbl || P[k];
+      const w = wrapLabel(T(src.es, src.en), tx, ty, an, maxChars);
+      return `
       <g class="part-label" data-part="${k}">
         <line x1="${x}" y1="${y}" x2="${tx + (an === 'start' ? -3 : 3)}" y2="${ty - 3}"/>
         <circle cx="${x}" cy="${y}" r="2" fill="currentColor" opacity=".55"/>
-        <text x="${tx}" y="${ty}" text-anchor="${an === 'end' ? 'end' : 'start'}">${T(P[k].es, P[k].en)}</text>
-      </g>`).join('');
-    stageEl.innerHTML = `<svg viewBox="${vb}" role="img" class="leaf">${scene}${lab}</svg>`;
+        ${w.html}
+      </g>`;
+    }).join('');
+    stageEl.innerHTML = `<svg viewBox="${vb}" role="img" class="leaf parts-svg">${scene}${lab}</svg>`;
     const show = k => {
       els('.part-label', stageEl).forEach(g => g.classList.toggle('on', g.dataset.part === k));
       const p = P[k];
