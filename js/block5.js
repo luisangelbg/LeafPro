@@ -6,8 +6,7 @@
   let currentTerm = null;
 
   function plateSVG(term, opts) {
-    const o = Object.assign({ highlight: term.hl, skin: term.skin }, opts || {});
-    return term.compound ? Leaf.compound(term.compound, o) : Leaf.svg(term.model, o);
+    return termArt(term, opts);
   }
 
   function normalize(s) {
@@ -54,7 +53,7 @@
       <p><b style="color:var(--${ch.v})">${T(ch.es, ch.en)}</b></p>
       <p>${T(term.def.es, term.def.en)}</p>
       <p><b>${T('Ejemplos:', 'Examples:')}</b> ${T(term.ex.es, term.ex.en)}</p>`;
-    el('b5DlgBuild').style.display = term.compound ? 'none' : '';
+    el('b5DlgBuild').style.display = (term.compound || term.special || term.phyllo) ? 'none' : '';
     el('b5Dlg').showModal();
     /* highlight in the nav */
     els('#b5Nav button').forEach(b => b.classList.toggle('on', b.dataset.term === id));

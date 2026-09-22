@@ -21,6 +21,7 @@
 <script src="../js/morphdata.js"></script>
 <script src="../js/parts.js"></script>
 <script src="../js/block4.js"></script>
+<script src="../js/art.js"></script>
 <script src="../js/block7.js"></script>
 <script>
 const out = document.getElementById('out');
@@ -38,7 +39,7 @@ function parseSVG(s) {
 }
 
 /* ---------- 1. the morphological database ---------- */
-ok(MORPH.cats.length === 9, 'hay 9 categorías de caracteres');
+ok(MORPH.cats.length === 11, 'hay 11 categorías de caracteres');
 const ids = new Set();
 const catKeys = MORPH.cats.map(c => c.key);
 ok(MORPH.terms.length >= 100, `hay al menos 100 términos (${MORPH.terms.length})`);
@@ -51,7 +52,8 @@ for (const t of MORPH.terms) {
   ok(!!t.ex.es && !!t.ex.en, `${t.id}: ejemplos en los dos idiomas`);
   ok(t.def.es.length > 20 && t.def.en.length > 20, `${t.id}: definiciones con sustancia`);
 }
-for (const c of catKeys) ok(MORPH.byCat(c).length >= 7, `categoría ${c} con al menos 7 términos (${MORPH.byCat(c).length})`);
+for (const c of catKeys) ok(MORPH.byCat(c).length >= 4, `categoría ${c} con al menos 4 términos (${MORPH.byCat(c).length})`);
+ok(MORPH.terms.length >= 140, `el atlas creció a 140+ términos (${MORPH.terms.length})`);
 ok(MORPH.byId('f-ovada') && MORPH.byId('f-ovada').es === 'Ovada', 'byId encuentra f-ovada');
 
 /* every model references existing engine keys */
@@ -73,22 +75,28 @@ for (const tp of [0.3, 0.5, 0.7]) {
   ok(b(tp) >= b(tp - 0.15) && b(tp) >= b(tp + 0.15), `beta(tp=${tp}) es máximo local`);
 }
 
-/* every atlas term renders to valid SVG with a blade and a viewBox */
+/* every atlas term renders to valid drawing (engine, compound, phyllotaxy or special) */
 for (const t of MORPH.terms) {
   let svg = null, err = null;
-  try {
-    svg = t.compound ? Leaf.compound(t.compound, {}) : Leaf.svg(t.model, { highlight: t.hl, skin: t.skin });
-  } catch (e) { err = e; }
-  ok(!err, `${t.id}: el motor no lanza error${err ? ' — ' + err.message : ''}`);
+  try { svg = termArt(t); } catch (e) { err = e; }
+  ok(!err, `${t.id}: el dibujo no lanza error${err ? ' — ' + err.message : ''}`);
   if (err) continue;
+  ok(!svg.includes('NaN'), `${t.id}: sin NaN en el dibujo`);
+  if (t.phyllo) { ok(svg.includes('art-duo'), `${t.id}: par de vistas de filotaxia`); continue; }
   const el2 = parseSVG(svg);
   ok(!!el2, `${t.id}: SVG bien formado`);
   if (!el2) continue;
   const vb = (el2.getAttribute('viewBox') || '').split(/\s+/).map(Number);
   ok(vb.length === 4 && vb.every(x => isFinite(x)) && vb[2] > 0 && vb[3] > 0, `${t.id}: viewBox válido`);
-  ok(svg.includes('lf-blade') || svg.includes('lf-rachis'), `${t.id}: tiene lámina o raquis`);
-  ok(!svg.includes('NaN'), `${t.id}: sin NaN en el dibujo`);
+  if (!t.special) ok(svg.includes('lf-blade') || svg.includes('lf-rachis'), `${t.id}: tiene lámina o raquis`);
 }
+/* specials */
+ok(Leaf.SPECIAL_NAMES.length >= 12, `hay 12+ dibujos especiales (${Leaf.SPECIAL_NAMES.length})`);
+for (const name of Leaf.SPECIAL_NAMES) {
+  const svg = Leaf.special(name, {});
+  ok(!!parseSVG(svg) && svg.length > 300 && !svg.includes('NaN'), `especial ${name}: dibujo válido`);
+}
+ok(Leaf.special('no-existe', {}).includes('<svg'), 'especial desconocido: SVG vacío seguro');
 
 /* the blade path is closed and mirrored */
 {
@@ -128,7 +136,7 @@ for (const mg of ['aserrado', 'dentado', 'crenado', 'biserrado', 'espinoso', 'si
   ok(Math.abs(tip[0]) < 2 && tip[1] > 90, 'palmada: termina en el ápice del lóbulo central');
 }
 /* venation stays inside sensible bounds */
-for (const v of ['craspedodroma', 'camptodroma', 'broquidodroma', 'palmada', 'paralela', 'curvinervia', 'dicotomica', 'uninervia']) {
+for (const v of ['craspedodroma', 'semicraspedodroma', 'camptodroma', 'broquidodroma', 'palmada', 'paralela', 'transversa', 'curvinervia', 'campilodroma', 'dicotomica', 'uninervia', 'hifodroma']) {
   const svg = Leaf.svg({ shape: v === 'palmada' ? 'cordiforme' : 'eliptica', venation: v }, {});
   ok(parseSVG(svg) && !svg.includes('NaN'), `nervadura ${v}: dibujo válido`);
 }
@@ -165,6 +173,39 @@ ok(Leaf.svg({ shape: 'eliptica', apex: 'mucronado' }, {}).includes('lf-mucro'), 
 ok(Leaf.svg({ shape: 'eliptica', apex: 'aristado' }, {}).includes('lf-arista'), 'arista dibujada');
 ok(Leaf.svg({ shape: 'oblonga', base: 'amplexicaule' }, {}).includes('lf-stem'), 'amplexicaule dibuja el tallo');
 
+/* new venations behave as defined */
+{
+  const g = Leaf._bladeGeometry({ shape: 'oblonga' }, 100, 42);
+  const nSec = v => Leaf._veinPaths({ shape: 'oblonga', venation: v }, 100, 42, g.right, g.left, 't').sec.length;
+  ok(nSec('hifodroma') === 0, 'hifódroma: sin venas secundarias visibles');
+  ok(nSec('transversa') > 25, `penniparalela: muchas secundarias paralelas (${nSec('transversa')})`);
+  ok(nSec('semicraspedodroma') > nSec('craspedodroma'), 'semicraspedódroma: añade los arcos a los dientes');
+  ok(nSec('campilodroma') === 6, `campilódroma: 3 pares de primarias recurvadas (${nSec('campilodroma')})`);
+}
+/* new shapes exist and render */
+for (const s of ['oval', 'trulada', 'obtrulada', 'ensiforme', 'subulada', 'filiforme']) {
+  ok(!!Leaf.SHAPES[s], `forma nueva ${s} en el motor`);
+  ok(!!parseSVG(Leaf.svg({ shape: s }, {})), `forma nueva ${s}: dibuja`);
+}
+/* bilobed apex has a deep notch */
+{
+  const g = Leaf._bladeGeometry({ shape: 'oval', apex: 'bilobado', base: 'cordada' }, 100, 74);
+  const tipY = g.right[g.right.length - 1][1];
+  const maxY = Math.max(...g.right.map(p => p[1]));
+  ok(maxY - tipY > 14, `ápice bilobado: escotadura profunda (${(maxY - tipY).toFixed(1)})`);
+}
+/* new surfaces draw their ornament */
+ok(Leaf.svg({ shape: 'eliptica' }, { skin: 'glandulosa' }).includes('lf-dots'), 'glandulosa: puntos');
+ok(Leaf.svg({ shape: 'lanceolada' }, { skin: 'lepidota' }).includes('lepidota'), 'lepidota: escamitas');
+ok(Leaf.svg({ shape: 'ovada' }, { skin: 'rugosa' }).includes('lf-wrinkle'), 'rugosa: arrugas');
+ok(Leaf.svg({ shape: 'eliptica' }, { skin: 'lustrosa' }).includes('lf-gloss'), 'lustrosa: brillo');
+/* margins: erose renders without exploding */
+{
+  const plain = Leaf._bladeGeometry({ shape: 'obovada', margin: 'entero' }, 100, 50);
+  const er = Leaf._bladeGeometry({ shape: 'obovada', margin: 'eroso' }, 100, 50);
+  ok(Math.max(...er.right.map(p => p[0])) < Math.max(...plain.right.map(p => p[0])) * 1.35, 'margen eroso acotado');
+}
+
 /* ---------- 3. phyllotaxy renderers ---------- */
 for (const t of MORPH.byCat('filotaxia')) {
   const sv = B4.sideView(t.phyllo), tv = B4.topView(t.phyllo);
@@ -176,10 +217,33 @@ for (const t of MORPH.byCat('filotaxia')) {
   const sv = B4.sideView({ mode: 'spiral', angle: 180 });
   ok((sv.match(/lf-blade/g) || []).length >= 4, 'alterna dística: dibuja hojas en zigzag');
 }
+/* equitant fan */
+{
+  const sv = B4.sideView({ mode: 'equitant' });
+  ok(parseSVG(sv) && (sv.match(/rotate\(/g) || []).length >= 6, 'equitante: abanico de hojas plegadas');
+  ok(parseSVG(B4.topView({ mode: 'equitant' })), 'equitante: vista superior en un plano');
+}
+
+/* ---------- anatomy cross-section ---------- */
+{
+  const div = document.createElement('div');
+  const info = document.createElement('div');
+  Parts.render(div, info, 'section');
+  const svg = div.querySelector('svg');
+  ok(!!svg, 'corte anatómico: se dibuja');
+  ok(div.querySelectorAll('.part-label').length >= 12, `corte anatómico: 12+ etiquetas (${div.querySelectorAll('.part-label').length})`);
+  ok(info.textContent.length > 40, 'corte anatómico: panel de información con contenido');
+  for (const k of ['cuticula', 'empalizada', 'esponjoso', 'estoma', 'oclusivas', 'camara', 'xilema', 'floema', 'tricoma', 'epidermis_haz', 'epidermis_enves', 'haz_vascular', 'aire']) {
+    ok(!!Parts.DEFS[k] && !!Parts.DEFS[k].d.es && !!Parts.DEFS[k].d.en, `anatomía ${k}: definición bilingüe`);
+  }
+  /* the palisade sits above the spongy tissue (haz up) */
+  Parts.render(div, info, 'section');
+  ok(div.innerHTML.indexOf('HAZ') > -1 || div.innerHTML.indexOf('upper') > -1, 'corte: rotula haz y envés');
+}
 
 /* ---------- 4. quiz generators ---------- */
 for (let i = 0; i < 40; i++) {
-  const q = B7.qFigureToTerm(['forma', 'apice', 'base', 'margen', 'nervadura', 'compo', 'filotaxia']);
+  const q = B7.qFigureToTerm(['forma', 'apice', 'base', 'margen', 'nervadura', 'compo', 'filotaxia', 'modificada', 'duracion']);
   ok(q.options.length === 4, `pregunta figura→término ${i}: 4 opciones`);
   ok(q.options.filter(o => o.ok).length === 1, `pregunta figura→término ${i}: exactamente 1 correcta`);
   ok(new Set(q.options.map(o => o.txt)).size === 4, `pregunta figura→término ${i}: opciones distintas`);

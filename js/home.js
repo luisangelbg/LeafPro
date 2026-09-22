@@ -24,6 +24,12 @@
       c: { es: 'imparipinnada, como la rosa', en: 'odd-pinnate, like a rose' } },
     { cmp: { type: 'palmaticompuesta', n: 6, leaflet: { shape: 'oblanceolada' } },
       c: { es: 'palmaticompuesta, como la ceiba', en: 'palmately compound, like kapok' } },
+    { m: { shape: 'oval', apex: 'bilobado', base: 'cordada', venation: 'palmada' },
+      c: { es: 'ápice bilobado, como la pata de vaca', en: 'bilobed apex, like Bauhinia' } },
+    { sp: 'jarra',
+      c: { es: 'hoja jarra de Nepenthes: una trampa', en: 'Nepenthes pitcher leaf: a trap' } },
+    { m: { shape: 'oblonga', venation: 'transversa', apex: 'redondeado', base: 'redondeada' },
+      c: { es: 'penniparalela, como el plátano', en: 'pinnate-parallel, like banana' } },
   ];
   let showI = 0, showTimer = null;
   function heroDraw() {
@@ -32,7 +38,9 @@
     const s = SHOW[showI % SHOW.length];
     box.style.opacity = 0;
     setTimeout(() => {
-      box.innerHTML = s.cmp ? Leaf.compound(s.cmp, { class: 'hero-leaf' }) : Leaf.svg(s.m, { class: 'hero-leaf' });
+      box.innerHTML = s.sp ? Leaf.special(s.sp, { class: 'hero-leaf' })
+        : s.cmp ? Leaf.compound(s.cmp, { class: 'hero-leaf' })
+        : Leaf.svg(s.m, { class: 'hero-leaf' });
       const svg = box.querySelector('svg');
       if (svg) { svg.style.height = '320px'; svg.style.width = 'auto'; svg.style.margin = '0 auto'; }
       cap.textContent = T(s.c.es, s.c.en);
@@ -62,14 +70,14 @@
 
   /* ---------- feature grid ---------- */
   const FEATURES = [
-    { n: 2, es: ['Partes de la hoja', 'La hoja de dicotiledónea y la de pasto, etiqueta por etiqueta, y las formas de unirse al tallo.'],
-      en: ['Parts of the leaf', 'The dicot leaf and the grass leaf, label by label, plus the ways of joining the stem.'] },
+    { n: 2, es: ['Partes de la hoja', 'La hoja por fuera y por dentro: dicotiledónea, pasto, haz y envés, el corte anatómico interactivo y la inserción en el tallo.'],
+      en: ['Parts of the leaf', 'The leaf outside and inside: dicot, grass, upper and lower faces, the interactive cross-section and the attachment to the stem.'] },
     { n: 3, es: ['Simple y compuesta', 'Folíolos, raquis y el truco de la yema axilar para no confundir nunca hoja con folíolo.'],
       en: ['Simple and compound', 'Leaflets, rachis and the axillary-bud trick to never confuse a leaf with a leaflet.'] },
     { n: 4, es: ['Filotaxia', 'Alterna, opuesta, verticilada, en roseta… y un simulador del ángulo de oro de 137.5°.'],
       en: ['Phyllotaxy', 'Alternate, opposite, whorled, rosette… and a simulator of the 137.5° golden angle.'] },
-    { n: 5, es: ['Atlas morfológico', 'Más de 100 términos ilustrados: formas, ápices, bases, márgenes, nervaduras y más.'],
-      en: ['Morphology atlas', 'Over 100 illustrated terms: shapes, apices, bases, margins, venations and more.'] },
+    { n: 5, es: ['Atlas morfológico', 'Más de 140 términos ilustrados: formas, ápices, bases, márgenes, nervaduras, hojas modificadas y más.'],
+      en: ['Morphology atlas', 'Over 140 illustrated terms: shapes, apices, bases, margins, venations, modified leaves and more.'] },
     { n: 6, es: ['Arma una hoja', 'Combina caracteres y mira la hoja dibujarse con su descripción botánica redactada.'],
       en: ['Build a leaf', 'Combine characters and watch the leaf drawn with its written botanical description.'] },
     { n: 7, es: ['Autoevaluación', 'Preguntas generadas por el motor: nunca se repiten las mismas hojas.'],
@@ -120,6 +128,8 @@
       'Simpson, M. G. (2019). <i>Plant Systematics</i> (3.ª ed.). Academic Press.',
       'Beentje, H. (2016). <i>The Kew Plant Glossary: An Illustrated Dictionary of Plant Terms</i> (2.ª ed.). Kew Publishing.',
       'Font Quer, P. (2001). <i>Diccionario de botánica</i> (2.ª ed.). Península.',
+      'Bell, A. D. (2008). <i>Plant Form: An Illustrated Guide to Flowering Plant Morphology</i>. Timber Press.',
+      'Evert, R. F. y Eichhorn, S. E. (2013). <i>Raven Biology of Plants</i> (8.ª ed.). W. H. Freeman. [Anatomía de la hoja]',
     ].map(x => `<li>${x}</li>`).join('');
   }
 

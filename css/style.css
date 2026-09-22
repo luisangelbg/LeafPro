@@ -32,10 +32,11 @@
   --warning: #c98014;
   /* the characters of the leaf */
   --cF: #3f8f4a; --cA: #c8741a; --cB: #2a7fb8; --cM: #c84a6f; --cN: #8a5cc6;
-  --cC: #8a6d3b; --cP: #2f9d8f; --cU: #b8862a; --cS: #6d8f3a;
+  --cC: #8a6d3b; --cP: #2f9d8f; --cU: #b8862a; --cS: #6d8f3a; --cX: #b8552e; --cD: #5c7a99;
   --cF-soft: rgba(63,143,74,.13); --cA-soft: rgba(200,116,26,.14); --cB-soft: rgba(42,127,184,.13);
   --cM-soft: rgba(200,74,111,.12); --cN-soft: rgba(138,92,198,.13); --cC-soft: rgba(138,109,59,.14);
   --cP-soft: rgba(47,157,143,.13); --cU-soft: rgba(184,134,42,.15); --cS-soft: rgba(109,143,58,.15);
+  --cX-soft: rgba(184,85,46,.13); --cD-soft: rgba(92,122,153,.13);
   /* leaf drawing */
   --lfBlade1: #8fc26e; --lfBlade2: #5a9c47; --lfVein: #3e7031; --lfVeinT: rgba(62,112,49,.5);
   --lfOutline: #2e5a25; --lfPetiole: #7a9c52; --lfStipule: #a5c47e; --lfExtra: #8a6d3b;
@@ -54,10 +55,11 @@
     --gold: #f2c94e; --leaf-rgb: 124, 199, 117; --leaf: #7cc775; --sky: #74b8ea;
     --success: #5cc27a; --danger: #f07166; --warning: #f0b24a;
     --cF: #7cc775; --cA: #f2a64a; --cB: #6fb6e8; --cM: #f07fa8; --cN: #c39bea;
-    --cC: #d3b273; --cP: #5fc9ba; --cU: #e8bd63; --cS: #b3c46a;
+    --cC: #d3b273; --cP: #5fc9ba; --cU: #e8bd63; --cS: #b3c46a; --cX: #e8926a; --cD: #8fb3d4;
     --cF-soft: rgba(124,199,117,.15); --cA-soft: rgba(242,166,74,.15); --cB-soft: rgba(111,182,232,.15);
     --cM-soft: rgba(240,127,168,.14); --cN-soft: rgba(195,155,234,.15); --cC-soft: rgba(211,178,115,.15);
     --cP-soft: rgba(95,201,186,.14); --cU-soft: rgba(232,189,99,.15); --cS-soft: rgba(179,196,106,.15);
+  --cX-soft: rgba(232,146,106,.15); --cD-soft: rgba(143,179,212,.15);
     --lfBlade1: #4e7a3a; --lfBlade2: #6ea457; --lfVein: #c6e2b2; --lfVeinT: rgba(198,226,178,.5);
     --lfOutline: #a9cf92; --lfPetiole: #8aa668; --lfStipule: #6d8a50; --lfExtra: #d3b273;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.32);
@@ -72,10 +74,11 @@
   --gold: #f2c94e; --leaf-rgb: 124, 199, 117; --leaf: #7cc775; --sky: #74b8ea;
   --success: #5cc27a; --danger: #f07166; --warning: #f0b24a;
   --cF: #7cc775; --cA: #f2a64a; --cB: #6fb6e8; --cM: #f07fa8; --cN: #c39bea;
-  --cC: #d3b273; --cP: #5fc9ba; --cU: #e8bd63; --cS: #b3c46a;
+  --cC: #d3b273; --cP: #5fc9ba; --cU: #e8bd63; --cS: #b3c46a; --cX: #e8926a; --cD: #8fb3d4;
   --cF-soft: rgba(124,199,117,.15); --cA-soft: rgba(242,166,74,.15); --cB-soft: rgba(111,182,232,.15);
   --cM-soft: rgba(240,127,168,.14); --cN-soft: rgba(195,155,234,.15); --cC-soft: rgba(211,178,115,.15);
   --cP-soft: rgba(95,201,186,.14); --cU-soft: rgba(232,189,99,.15); --cS-soft: rgba(179,196,106,.15);
+  --cX-soft: rgba(232,146,106,.15); --cD-soft: rgba(143,179,212,.15);
   --lfBlade1: #4e7a3a; --lfBlade2: #6ea457; --lfVein: #c6e2b2; --lfVeinT: rgba(198,226,178,.5);
   --lfOutline: #a9cf92; --lfPetiole: #8aa668; --lfStipule: #6d8a50; --lfExtra: #d3b273;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.32);
@@ -230,6 +233,17 @@ svg.leaf.skin-suculenta .lf-blade { fill: color-mix(in srgb, var(--lfBlade1) 70%
 svg.leaf.skin-suculenta .lf-outline { stroke-width: 3.4; }
 svg.leaf.skin-membranacea .lf-blade { fill: var(--lfBlade1); fill-opacity: .55; }
 svg.leaf .lf-underside { fill: color-mix(in srgb, var(--lfBlade1) 40%, #e8ecdc); stroke: var(--lfOutline); stroke-width: 1; opacity: .95; }
+svg.leaf .lf-dots.glandulosa circle { fill: var(--gold); stroke: var(--lfOutline); stroke-width: .4; }
+svg.leaf .lf-dots.lepidota circle { fill: color-mix(in srgb, var(--card-bg) 70%, var(--lfBlade2)); stroke: var(--lfOutline); stroke-width: .5; }
+svg.leaf .lf-wrinkle { stroke: var(--lfVeinT); stroke-width: .9; }
+svg.leaf .lf-gloss { fill: #ffffff; opacity: .38; }
+:root[data-theme="dark"] svg.leaf .lf-gloss { opacity: .22; }
+/* abaxial (underside) rendering of a whole leaf */
+svg.leaf.face-enves .lf-blade { fill: color-mix(in srgb, var(--lfBlade1) 45%, #dde5cf); }
+svg.leaf.face-enves .lf-mid { stroke-width: 3.2; }
+svg.leaf.face-enves .lf-sec { stroke-width: 1.8; }
+svg.leaf.face-haz .lf-blade { fill: color-mix(in srgb, var(--lfBlade2) 78%, #2e5a25); }
+:root[data-theme="dark"] svg.leaf.face-haz .lf-blade { fill: color-mix(in srgb, var(--lfBlade2) 85%, #d9e8c8); }
 svg.leaf.hl-veins .lf-mid, svg.leaf.hl-veins .lf-sec { stroke: var(--cN); }
 svg.leaf.hl-veins .lf-ter { stroke: var(--cN); opacity: .5; }
 
@@ -260,6 +274,18 @@ svg.leaf.hl-veins .lf-ter { stroke: var(--cN); opacity: .5; }
 .part-info { min-height: 150px; }
 .part-info h3 { margin: 0 0 6px; color: var(--primary); }
 .part-info .p-lat { font-size: .8rem; color: var(--text-muted); font-style: italic; }
+
+/* ---------- Haz and envés, anatomy ---------- */
+.faces-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 720px) { .faces-grid { grid-template-columns: 1fr; } }
+.face-card { text-align: center; }
+.face-card svg { height: 250px; max-width: 100%; }
+.face-card h3 { margin: 2px 0 8px; }
+.parts-wide { grid-template-columns: 1.5fr .6fr; }
+@media (max-width: 860px) { .parts-wide { grid-template-columns: 1fr; } }
+.art-duo { display: flex; gap: 4px; align-items: center; justify-content: center; }
+.art-duo svg { max-height: 100%; }
+.plate .art-duo svg { height: 128px; width: 49%; }
 
 /* ---------- Atlas ---------- */
 .at-layout { display: grid; grid-template-columns: 240px 1fr; gap: 20px; align-items: start; }

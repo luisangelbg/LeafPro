@@ -4,16 +4,15 @@
    Ten questions per round, instant correction with the atlas definition. */
 
 (function () {
-  const QUIZ_CATS = ['forma', 'apice', 'base', 'margen', 'nervadura', 'compo', 'filotaxia'];
+  const QUIZ_CATS = ['forma', 'apice', 'base', 'margen', 'nervadura', 'compo', 'filotaxia', 'modificada'];
   const run = { mode: null, cats: [], qs: [], i: 0, score: 0 };
 
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
   function shuffle(a) { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
   function art(term) {
-    return term.compound ? Leaf.compound(term.compound, {})
-      : term.phyllo ? `<div style="display:inline-flex; gap:4px; align-items:center; max-width:340px">${B4.sideView(term.phyllo)}${B4.topView(term.phyllo)}</div>`
-      : Leaf.svg(term.model, { highlight: term.hl, skin: term.skin });
+    if (term.phyllo) return `<div style="display:inline-flex; gap:4px; align-items:center; max-width:340px">${B4.sideView(term.phyllo)}${B4.topView(term.phyllo)}</div>`;
+    return termArt(term);
   }
 
   /* ---------- question builders ---------- */
@@ -24,8 +23,8 @@
     const options = shuffle([answer, ...shuffle(terms.filter(x => x !== answer)).slice(0, 3)]);
     const ch = CHARS[cat];
     return {
-      prompt: T(`¿Qué término describe ${cat === 'filotaxia' ? 'esta filotaxia' : cat === 'compo' ? 'esta hoja' : 'este carácter resaltado'}? <span style="color:var(--${ch.v})">(${T(ch.es, ch.en).toLowerCase()})</span>`,
-                `Which term describes ${cat === 'filotaxia' ? 'this phyllotaxy' : cat === 'compo' ? 'this leaf' : 'the highlighted character'}? <span style="color:var(--${ch.v})">(${T(ch.es, ch.en).toLowerCase()})</span>`),
+      prompt: T(`¿Qué término describe ${cat === 'filotaxia' ? 'esta filotaxia' : cat === 'compo' ? 'esta hoja' : cat === 'modificada' ? 'esta hoja modificada' : cat === 'duracion' ? 'este follaje' : 'este carácter resaltado'}? <span style="color:var(--${ch.v})">(${T(ch.es, ch.en).toLowerCase()})</span>`,
+                `Which term describes ${cat === 'filotaxia' ? 'this phyllotaxy' : cat === 'compo' ? 'this leaf' : cat === 'modificada' ? 'this modified leaf' : cat === 'duracion' ? 'this foliage' : 'the highlighted character'}? <span style="color:var(--${ch.v})">(${T(ch.es, ch.en).toLowerCase()})</span>`),
       fig: art(answer),
       options: options.map(o => ({ txt: T(o.es, o.en), ok: o === answer })),
       exp: `<b>${T(answer.es, answer.en)}:</b> ${T(answer.def.es, answer.def.en)} <i>${T(answer.ex.es, answer.ex.en)}</i>`,

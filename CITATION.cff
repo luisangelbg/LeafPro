@@ -7,7 +7,7 @@ abstract: >-
   the app from a small model (blade shape × apex × base × margin × pinnate or palmate lobing ×
   venation), including compound leaves and leaf surfaces. It covers the parts of the dicot and
   grass leaf, simple versus compound leaves with the axillary-bud test, phyllotaxy with a
-  golden-angle simulator, an atlas of more than 110 illustrated terms with definitions and
+  golden-angle simulator, an atlas of more than 140 illustrated terms, an interactive cross-section of the blade from the upper to the lower face (haz and envés), modified leaves (tendrils, spines, bracts, spathes, cataphylls, pitchers and snap traps), leaf duration with definitions and
   example species with an emphasis on Mexico, a leaf builder that writes the botanical
   description as characters are combined, generative self-assessment, and a classroom mode
   for projecting question-first plates and printing study or exam sheets. The interface is in
@@ -18,7 +18,7 @@ authors:
     family-names: "Barrera-Guzmán"
     email: lbarrerag@chapingo.mx
     orcid: "https://orcid.org/0000-0001-8057-2583"
-version: 1.0.0
+version: 1.1.0
 date-released: 2026-09-21
 url: "https://github.com/luisangelbg/LeafPro"
 repository-code: "https://github.com/luisangelbg/LeafPro"

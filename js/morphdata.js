@@ -31,8 +31,14 @@
       es: 'Cómo se une la hoja al tallo: con pecíolo o sin él, abrazando el tallo, atravesada por él, o acompañada de estípulas, vainas y lígulas.',
       en: 'How the leaf joins the stem: with or without a petiole, clasping the stem, pierced by it, or accompanied by stipules, sheaths and ligules.' } },
     { key: 'superficie', sub: {
-      es: 'El aspecto y la consistencia de la lámina: lampiña o con pelos, delgada o correosa, verde o cubierta de cera azulada.',
-      en: 'The look and feel of the blade: hairless or hairy, thin or leathery, green or covered with bluish wax.' } },
+      es: 'El aspecto y la consistencia de la lámina: lampiña o con pelos, delgada o correosa, verde o cubierta de cera azulada. Muchos de estos caracteres difieren entre el haz y el envés.',
+      en: 'The look and feel of the blade: hairless or hairy, thin or leathery, green or covered with bluish wax. Many of these characters differ between the upper and lower faces.' } },
+    { key: 'modificada', sub: {
+      es: 'Hojas que la evolución transformó para trepar, defender, atraer, proteger, almacenar, flotar o cazar. Se reconocen como hojas por su posición (nacen en un nudo, con yema axilar), no por su aspecto.',
+      en: 'Leaves that evolution reshaped to climb, defend, attract, protect, store, float or hunt. They are recognised as leaves by their position (borne at a node, with an axillary bud), not by their looks.' } },
+    { key: 'duracion', sub: {
+      es: 'Cuánto vive la hoja en la planta y cuánto varía dentro de un mismo individuo.',
+      en: 'How long the leaf lives on the plant, and how much it varies within one individual.' } },
   ];
 
   const T = [];
@@ -166,6 +172,48 @@
     'Rábano (<i>Raphanus sativus</i>), mostaza.',
     'Radish (<i>Raphanus sativus</i>), mustard.',
     { shape: 'lirada' }, 'forma');
+  t('f-oval', 'forma', 'Oval (anchamente elíptica)', 'Oval (broadly elliptic)',
+    'Elíptica muy ancha: el largo apenas supera al ancho y el contorno es casi ovalado.',
+    'A very broad ellipse: length barely exceeds width and the outline is almost oval.',
+    'Guayaba (algunas hojas), matasano, membrillo.',
+    'Some guava and quince leaves.',
+    { shape: 'oval', venation: 'broquidodroma' }, 'forma');
+  t('f-trulada', 'forma', 'Trulada', 'Trullate',
+    'Con forma de llana de albañil: cuatro lados casi rectos con lo más ancho abajo, como rombo desplazado hacia la base.',
+    'Trowel-shaped: four nearly straight sides, widest below the middle, like a rhombus shifted towards the base.',
+    'Algunas <i>Coccoloba</i> y ciruelas silvestres.',
+    'Some seagrapes and hog plums.',
+    { shape: 'trulada' }, 'forma');
+  t('f-obtrulada', 'forma', 'Obtrulada', 'Obtrullate',
+    'Trulada invertida: lo más ancho queda arriba, hacia el ápice.',
+    'An inverted trullate: widest above the middle, towards the apex.',
+    'Hojas de algunas leguminosas arbóreas.',
+    'Leaves of some leguminous trees.',
+    { shape: 'obtrulada' }, 'forma');
+  t('f-ensiforme', 'forma', 'Ensiforme', 'Ensiform',
+    'Con forma de espada: larga, plana, rígida y puntiaguda, comprimida lateralmente.',
+    'Sword-shaped: long, flat, stiff and pointed, laterally compressed.',
+    'Lirio (<i>Iris</i>), gladiola, espadaña.',
+    'Iris, gladiolus, cattail.',
+    { shape: 'ensiforme', venation: 'paralela', petiole: 0 }, 'forma');
+  t('f-subulada', 'forma', 'Subulada', 'Subulate',
+    'Con forma de lezna: angosta, rígida y endurecida, que se estrecha desde la base hasta una punta fina.',
+    'Awl-shaped: narrow, stiff and hardened, tapering from the base to a fine point.',
+    'Enebro joven (<i>Juniperus</i>), ahuehuete.',
+    'Juvenile juniper (<i>Juniperus</i>), bald cypress.',
+    { shape: 'subulada', petiole: 0.03 }, 'forma');
+  t('f-filiforme', 'forma', 'Filiforme', 'Filiform',
+    'Con forma de hilo: extremadamente delgada y flexible, de sección casi circular.',
+    'Thread-like: extremely slender and flexible, almost circular in section.',
+    'Hinojo (segmentos), esparraguera, romerillo.',
+    'Fennel segments, asparagus fern.',
+    { shape: 'filiforme', petiole: 0.04 }, 'forma');
+  t('f-escamiforme', 'forma', 'Escamiforme (escuamiforme)', 'Scale-like (squamiform)',
+    'Reducida a una escama diminuta, aplicada y a menudo imbricada sobre la ramilla, que asume la fotosíntesis junto con el tallo.',
+    'Reduced to a minute scale, appressed and often imbricate on the twig, sharing photosynthesis with the stem.',
+    'Cedro blanco (<i>Cupressus</i>), tuja, tamarisco, <i>Casuarina</i>.',
+    'Cypress (<i>Cupressus</i>), arborvitae, tamarisk, <i>Casuarina</i>.',
+    { shape: 'subulada' }, 'forma', { special: 'escamiforme' });
   t('f-runcinada', 'forma', 'Runcinada', 'Runcinate',
     'Pinnatipartida con lóbulos agudos dirigidos hacia la base, como sierra invertida.',
     'Pinnately cut with sharp lobes pointing towards the base, like an inverted saw.',
@@ -236,6 +284,12 @@
     'With a “tail”: an extremely long, narrow acumen.',
     'Higuera sagrada (<i>Ficus religiosa</i>).', 'Sacred fig (<i>Ficus religiosa</i>).',
     { shape: 'cordiforme', apex: 'caudado', venation: 'palmada' });
+  apx('a-bilobado', 'Bilobado', 'Bilobed',
+    'El ápice se divide en dos lóbulos redondeados separados por una escotadura profunda.',
+    'The apex is divided into two rounded lobes separated by a deep sinus.',
+    'Pata de vaca (<i>Bauhinia</i>), <i>Ginkgo biloba</i>.',
+    'Orchid tree (<i>Bauhinia</i>), <i>Ginkgo biloba</i>.',
+    { shape: 'oval', apex: 'bilobado', base: 'cordada', venation: 'palmada' });
   apx('a-pungente', 'Pungente (espinoso)', 'Pungent (spiny)',
     'Termina en una espina dura y punzante.',
     'Ends in a hard, pricking spine.',
@@ -385,6 +439,12 @@
     'Edge entire but fringed with fine hairs, like eyelashes.',
     'Siempreviva pilosa, algunas gramíneas.', 'Some stonecrops and grasses.',
     { shape: 'eliptica', margin: 'ciliado' });
+  mar('m-eroso', 'Eroso', 'Erose',
+    'Irregularmente mordisqueado, como roído, sin un patrón regular de dientes.',
+    'Irregularly gnawed, as if nibbled, with no regular tooth pattern.',
+    'Brácteas de encino, algunas orquídeas y bromelias.',
+    'Oak bracts, some orchids and bromeliads.',
+    { shape: 'obovada', margin: 'eroso' });
   mar('m-revoluto', 'Revoluto', 'Revolute',
     'El borde se enrolla hacia el envés; visto de frente parece engrosado.',
     'The edge rolls towards the underside; seen from above it looks thickened.',
@@ -446,11 +506,22 @@
     'Pinnate with secondary veins running all the way to the margin, often ending in a tooth.',
     'Olmo, castaño, encino.', 'Elm, chestnut, oak.',
     { shape: 'ovada', venation: 'craspedodroma', margin: 'aserrado' });
-  ner('n-camptodroma', 'Camptódroma', 'Camptodromous',
-    'Pinnada cuyas secundarias se arquean cerca del margen sin tocarlo.',
-    'Pinnate with the secondaries arching near the margin without touching it.',
-    'Aguacate, laurel.', 'Avocado, laurel.',
+  ner('n-semicraspedodroma', 'Semicraspedódroma', 'Semicraspedodromous',
+    'Cada vena secundaria se bifurca cerca del margen: una rama termina en el diente y la otra se une en arco con la secundaria siguiente (Hickey, 1973).',
+    'Each secondary forks near the margin: one branch ends in the tooth, the other joins the next secondary in a loop (Hickey, 1973).',
+    'Encinos y robles, algunas rosáceas.', 'Oaks, some roses.',
+    { shape: 'ovada', venation: 'semicraspedodroma', margin: 'aserrado' });
+  ner('n-camptodroma', 'Eucamptódroma', 'Eucamptodromous',
+    'Pinnada cuyas secundarias se arquean hacia el ápice cerca del margen y se desvanecen sin tocarlo ni unirse entre sí (Hickey, 1973).',
+    'Pinnate with the secondaries arching towards the apex near the margin and fading without touching it or joining one another (Hickey, 1973).',
+    'Aguacate, laurel, canelo.', 'Avocado, laurel.',
     { shape: 'eliptica', venation: 'camptodroma' });
+  ner('n-hifodroma', 'Hifódroma', 'Hyphodromous',
+    'Solo la vena media es visible: las demás venas faltan, son rudimentarias o quedan ocultas dentro de una lámina coriácea o carnosa (Ellis et al., 2009).',
+    'Only the midvein is visible: the remaining veins are absent, rudimentary or hidden inside a leathery or fleshy blade (Ellis et al., 2009).',
+    'Siempreviva, muchas crasuláceas y orquídeas.',
+    'Houseleeks, many stonecrops and orchids.',
+    { shape: 'obovada', venation: 'hifodroma' });
   ner('n-broquidodroma', 'Broquidódroma', 'Brochidodromous',
     'Camptódroma en la que las secundarias se unen entre sí formando arcos o festones junto al margen.',
     'Camptodromous with the secondaries joining one another in loops near the margin.',
@@ -466,6 +537,18 @@
     'Many almost parallel veins run from base to apex; typical of monocots.',
     'Maíz, caña, pastos, agave.', 'Maize, sugarcane, grasses, agave.',
     { shape: 'linear', venation: 'paralela', base: 'envainadora', petiole: 0 });
+  ner('n-transversa', 'Penniparalela (paralelódroma pinnada)', 'Pinnate-parallel',
+    'Una vena media robusta de la que salen numerosísimas secundarias paralelas entre sí, casi perpendiculares, que corren derechas al margen.',
+    'A stout midvein giving off very numerous parallel secondaries, almost at right angles, running straight to the margin.',
+    'Plátano (<i>Musa</i>), platanillo (<i>Heliconia</i>), ave del paraíso.',
+    'Banana (<i>Musa</i>), heliconias, bird-of-paradise.',
+    { shape: 'oblonga', venation: 'transversa', apex: 'redondeado', base: 'redondeada' });
+  ner('n-campilodroma', 'Campilódroma', 'Campylodromous',
+    'Varias venas primarias recurvadas nacen juntas en la base, se arquean fuertemente hacia afuera y vuelven a reunirse en el ápice (Ellis et al., 2009).',
+    'Several recurved primary veins arise together at the base, bow strongly outwards and meet again at the apex (Ellis et al., 2009).',
+    'Maranta, hoja de maíz morado ornamental, llantén de agua (<i>Alisma</i>).',
+    'Prayer plants (<i>Maranta</i>), water plantain (<i>Alisma</i>).',
+    { shape: 'oval', venation: 'campilodroma', apex: 'acuminado' });
   ner('n-curvinervia', 'Curvinervia (acródroma)', 'Curvi-veined (acrodromous)',
     'Pocas venas arqueadas nacen en la base (o cerca de ella) y convergen en el ápice.',
     'A few arched veins arise at or near the base and converge at the apex.',
@@ -570,6 +653,12 @@
     'Pinos (2, 3 o 5 acículas por fascículo), berberis.',
     'Pines (2, 3 or 5 needles per fascicle), barberry.',
     { mode: 'fascicle', n: 3 });
+  fil('p-equitante', 'Equitante', 'Equitant',
+    'Hojas dísticas plegadas por la mitad a lo largo, que se montan unas sobre otras en un mismo plano formando un abanico.',
+    'Distichous leaves folded lengthwise, each straddling the next in one plane, forming a fan.',
+    'Lirio (<i>Iris</i>), gladiola, patito (<i>Oncidium</i>).',
+    'Iris, gladiolus, some orchids (<i>Oncidium</i>).',
+    { mode: 'equitant' });
 
   /* ============ INSERCIÓN ============ */
   const uni = (id, es, en, defEs, defEn, exEs, exEn, model, extra) =>
@@ -622,11 +711,12 @@
     'Frijol, mimosa sensitiva, tamarindo.',
     'Bean, sensitive plant, tamarind.',
     { shape: 'ovada', petiole: 0.42, pulvinus: true });
-  uni('u-filodio', 'Filodio', 'Phyllode',
-    'Pecíolo aplanado y ensanchado que funciona como lámina; la lámina verdadera falta o cae pronto.',
-    'A flattened, widened petiole working as a blade; the true blade is missing or soon shed.',
-    'Acacias australianas.', 'Australian wattles.',
-    { shape: 'falcada', venation: 'curvinervia', petiole: 0.08 });
+  uni('u-connata', 'Connata (connado-perfoliada)', 'Connate-perfoliate',
+    'Dos hojas opuestas y sésiles fusionadas por sus bases alrededor del tallo, que parece atravesar una sola lámina doble.',
+    'Two opposite sessile leaves fused by their bases around the stem, which seems to pierce a single double blade.',
+    'Madreselva (<i>Lonicera</i>, hojas superiores), <i>Eupatorium perfoliatum</i>.',
+    'Honeysuckle (<i>Lonicera</i>, upper leaves), boneset.',
+    { shape: 'eliptica' }, { special: 'connata' });
 
   /* ============ SUPERFICIE ============ */
   const sup = (id, es, en, defEs, defEn, exEs, exEn, model, skin) =>
@@ -677,10 +767,123 @@
     'Begonia, hoja santa.', 'Begonia, pepperleaf.',
     { shape: 'cordiforme', venation: 'palmada' }, 'membranacea');
   sup('s-discolora', 'Discolora', 'Discolorous',
-    'Haz y envés de colores claramente distintos.',
-    'Upper and lower faces of clearly different colours.',
-    'Encino blanco, clavo, magnolia.', 'White oak, magnolia.',
+    'Haz y envés de colores claramente distintos; muy visible cuando el viento voltea las hojas.',
+    'Upper and lower faces of clearly different colours; very visible when the wind turns the leaves.',
+    'Encino blanco, clavo, magnolia, álamo blanco.', 'White oak, magnolia, white poplar.',
     { shape: 'eliptica' }, 'discolora');
+  sup('s-lustrosa', 'Lustrosa (nítida)', 'Lustrous (shiny)',
+    'Superficie brillante, como barnizada; propia del haz de muchas hojas coriáceas.',
+    'Glossy surface, as if varnished; typical of the upper face of many leathery leaves.',
+    'Hule, camelia, acebo, naranjo.', 'Rubber fig, camellia, holly, orange tree.',
+    { shape: 'eliptica', venation: 'broquidodroma' }, 'lustrosa');
+  sup('s-rugosa', 'Rugosa (bullada)', 'Rugose (bullate)',
+    'Con la superficie arrugada: el tejido se abomba entre las venas hundidas, como acolchado.',
+    'With a wrinkled surface: the tissue bulges between the sunken veins, like quilting.',
+    'Salvia, menta, gordolobo, col rizada.', 'Sage, mint, mullein, savoy cabbage.',
+    { shape: 'ovada', margin: 'crenado' }, 'rugosa');
+  sup('s-glandulosa', 'Glandulosa (punteada)', 'Glandular (punctate)',
+    'Con glándulas visibles como puntitos translúcidos u oscuros, a menudo aromáticos al estrujar la hoja.',
+    'With glands visible as translucent or dark dots, often aromatic when the leaf is crushed.',
+    'Naranjo y limonero, guayabo, pirul, ruda.', 'Citrus, guava, peppertree, rue.',
+    { shape: 'eliptica' }, 'glandulosa');
+  sup('s-lepidota', 'Lepidota (escamosa)', 'Lepidote (scaly)',
+    'Cubierta de escamitas redondas aplicadas, que dan aspecto plateado o herrumbroso.',
+    'Covered with small round appressed scales, giving a silvery or rusty look.',
+    'Bromelias (paxtle, <i>Tillandsia</i>), olivo (envés).',
+    'Bromeliads (<i>Tillandsia</i>), olive underside.',
+    { shape: 'lanceolada' }, 'lepidota');
+
+  /* ============ HOJAS MODIFICADAS ============ */
+  const mod = (id, es, en, defEs, defEn, exEs, exEn, art, model) =>
+    t(id, 'modificada', es, en, defEs, defEn, exEs, exEn, model || { shape: 'eliptica' }, null, art ? { special: art } : null);
+  mod('x-zarcillo', 'Zarcillo foliar', 'Leaf tendril',
+    'Hoja o folíolos transformados en filamentos que se enroscan en un soporte para trepar. En el chícharo, solo los folíolos terminales son zarcillos; las estípulas fotosintetizan.',
+    'A leaf or leaflets transformed into coiling filaments that grasp a support for climbing. In the pea only the terminal leaflets are tendrils; the stipules photosynthesise.',
+    'Chícharo (<i>Pisum</i>), haba de olor, calabaza (origen caulinar en cucurbitáceas).',
+    'Pea (<i>Pisum</i>), sweet pea; squash tendrils are stem-derived.',
+    'zarcillo');
+  mod('x-espina', 'Espina foliar', 'Leaf spine',
+    'Hoja entera o parte de ella endurecida en espina: defiende y reduce la pérdida de agua. La yema en su axila delata que la espina es una hoja; en el berberis, las hojas normales nacen del braquiblasto axilar.',
+    'A whole leaf or part of it hardened into a spine: it defends the plant and cuts water loss. The bud in its axil betrays the spine as a leaf; in barberry the normal leaves arise from the axillary short shoot.',
+    'Berberis (palo amarillo), cactos (las areolas llevan las espinas), huizache (estípulas espinosas).',
+    'Barberry, cacti (spines on areoles), acacias (spiny stipules).',
+    'espina');
+  mod('x-bractea', 'Bráctea', 'Bract',
+    'Hoja modificada asociada a flores o inflorescencias, a menudo vistosa para atraer polinizadores cuando las flores verdaderas son diminutas.',
+    'A modified leaf associated with flowers or inflorescences, often showy to attract pollinators when the true flowers are tiny.',
+    'Nochebuena (<i>Euphorbia pulcherrima</i>), bugambilia, piñanona; las glumas de los pastos.',
+    'Poinsettia (<i>Euphorbia pulcherrima</i>), bougainvillea; grass glumes.',
+    'bractea');
+  mod('x-espata', 'Espata', 'Spathe',
+    'Bráctea grande que envuelve una inflorescencia en espádice, típica de las aráceas.',
+    'A large bract enclosing a spadix inflorescence, typical of aroids.',
+    'Alcatraz (<i>Zantedeschia</i>), anturio, cuna de Moisés, totumo del maíz (espata de la mazorca).',
+    'Calla lily (<i>Zantedeschia</i>), anthurium, peace lily; maize husks.',
+    'espata');
+  mod('x-catafilo', 'Catafilo (escama de bulbo)', 'Cataphyll (bulb scale)',
+    'Hoja reducida a escama protectora o almacenadora: las túnicas secas y las capas carnosas de un bulbo son hojas; el tallo verdadero es el disco basal.',
+    'A leaf reduced to a protective or storage scale: the dry tunics and fleshy layers of a bulb are leaves; the true stem is the basal plate.',
+    'Cebolla y ajo (bulbos), yemas de invierno de los árboles (pérulas).',
+    'Onion and garlic bulbs; winter bud scales (perules).',
+    'catafilo');
+  mod('x-filodio', 'Filodio', 'Phyllode',
+    'Pecíolo aplanado y ensanchado que funciona como lámina; la lámina verdadera falta o cae pronto. Al ser vertical, expone menos superficie al sol del mediodía.',
+    'A flattened, widened petiole working as a blade; the true blade is missing or soon shed. Being vertical, it exposes less surface to midday sun.',
+    'Acacias australianas plantadas en México.',
+    'Australian wattles planted worldwide.',
+    null, { shape: 'falcada', venation: 'curvinervia', petiole: 0.08 });
+  mod('x-jarra', 'Ascidia (hoja jarra)', 'Pitcher (ascidiate leaf)',
+    'Hoja transformada en jarra con líquido digestivo: la lámina fotosintética se continúa en un zarcillo y éste en la trampa con su tapa. Caza insectos para obtener nitrógeno.',
+    'A leaf transformed into a pitcher of digestive fluid: the photosynthetic blade continues into a tendril and this into the trap with its lid. It hunts insects for nitrogen.',
+    '<i>Nepenthes</i>; en América, <i>Sarracenia</i> y <i>Heliamphora</i>.',
+    '<i>Nepenthes</i>; in the Americas, <i>Sarracenia</i> and <i>Heliamphora</i>.',
+    'jarra');
+  mod('x-venus', 'Trampa plegable', 'Snap trap',
+    'Lámina de dos lóbulos con pelos sensitivos: al segundo toque se cierra en una décima de segundo y los dientes marginales enjaulan a la presa.',
+    'A two-lobed blade with trigger hairs: at the second touch it snaps shut in a tenth of a second and the marginal teeth cage the prey.',
+    'Venus atrapamoscas (<i>Dionaea muscipula</i>); bajo el agua, <i>Aldrovanda</i>.',
+    'Venus flytrap (<i>Dionaea muscipula</i>); underwater, <i>Aldrovanda</i>.',
+    'venus');
+  mod('x-flotante', 'Hoja flotante', 'Floating leaf',
+    'Lámina ancha y peltada o acorazonada que flota: estomas solo en el haz, grandes espacios de aire en el mesófilo y pecíolo largo y flexible.',
+    'A broad peltate or heart-shaped blade that floats: stomata only on the upper face, large air spaces in the mesophyll and a long flexible petiole.',
+    'Nenúfar (<i>Nymphaea</i>), ninfa amarilla, <i>Victoria amazonica</i>.',
+    'Water lilies (<i>Nymphaea</i>), <i>Victoria amazonica</i>.',
+    'flotante');
+  mod('x-suculenta', 'Hoja de reserva (suculenta)', 'Storage (succulent) leaf',
+    'Hoja engrosada que almacena agua y mucílagos para sobrevivir la sequía; frecuente en rosetas con filotaxia espiralada compacta.',
+    'A thickened leaf storing water and mucilage to survive drought; frequent in rosettes with compact spiral phyllotaxy.',
+    'Maguey y sábila, siemprevivas, dudleyas.',
+    'Agaves and aloe, houseleeks, dudleyas.',
+    null, { shape: 'lanceolada', apex: 'pungente', margin: 'espinoso', petiole: 0.02, skin: 'suculenta' });
+
+  /* ============ DURACIÓN Y VARIACIÓN ============ */
+  const dur = (id, es, en, defEs, defEn, exEs, exEn, art, model) =>
+    t(id, 'duracion', es, en, defEs, defEn, exEs, exEn, model || { shape: 'eliptica' }, null, art ? { special: art } : null);
+  dur('d-caduca', 'Caduca (decidua)', 'Deciduous',
+    'Todas las hojas caen al llegar la estación desfavorable (frío o sequía) y el árbol queda desnudo; antes de caer, muchas retiran la clorofila y cambian de color.',
+    'All leaves fall at the onset of the unfavourable season (cold or drought) and the tree stands bare; before falling, many withdraw chlorophyll and change colour.',
+    'Fresno, jacaranda, colorín, ceiba (caducifolia por sequía).',
+    'Ash, jacaranda, coral tree, kapok (drought-deciduous).',
+    'arbol_caduca');
+  dur('d-perennifolia', 'Perennifolia (siempreverde)', 'Evergreen',
+    'El follaje se renueva poco a poco y la copa nunca queda desnuda; cada hoja individual vive de uno a varios años.',
+    'The foliage is renewed little by little and the crown is never bare; each individual leaf lives one to several years.',
+    'Pinos y encinos siempreverdes, cafeto, mango, laurel.',
+    'Pines and live oaks, coffee, mango, laurel.',
+    'arbol_perenne');
+  dur('d-marcescente', 'Marcescente', 'Marcescent',
+    'Las hojas mueren y se secan en otoño, pero permanecen prendidas al árbol hasta que las nuevas las empujan en primavera.',
+    'The leaves die and dry in autumn but remain attached until the new ones push them off in spring.',
+    'Varios encinos y robles jóvenes, hayas.',
+    'Several oaks (especially young ones), beeches.',
+    'arbol_marcescente');
+  dur('d-heterofilia', 'Heterofilia', 'Heterophylly',
+    'Una misma planta produce hojas de formas distintas: juveniles y adultas, de sol y de sombra, o aéreas y sumergidas. Advierte que una sola hoja no siempre representa a la especie.',
+    'One plant produces leaves of different shapes: juvenile and adult, sun and shade, or aerial and submerged. A warning that a single leaf does not always represent the species.',
+    'Eucalipto (juvenil opuesta, adulta falcada), hiedra, huele de noche acuático (<i>Ranunculus</i>).',
+    'Eucalypts (opposite juvenile, falcate adult), ivy, water crowfoot (<i>Ranunculus</i>).',
+    'heterofilia');
 
   window.MORPH = {
     cats: CATS,

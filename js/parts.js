@@ -61,6 +61,46 @@
     culmo: { es: 'Caña (culmo)', en: 'Culm', lat: 'culmus',
       d: { es: 'El tallo de los pastos: cilíndrico y con frecuencia hueco entre nudos.',
            en: 'The grass stem: cylindrical and often hollow between nodes.' } },
+    /* ---- cross-section (anatomy, from the haz down to the envés) ---- */
+    cuticula: { es: 'Cutícula', en: 'Cuticle', lat: 'cuticula',
+      d: { es: 'Película de cutina y ceras que sella la epidermis contra la pérdida de agua; suele ser más gruesa y brillante en el haz.',
+           en: 'A film of cutin and waxes sealing the epidermis against water loss; usually thicker and shinier on the upper face.' } },
+    epidermis_haz: { es: 'Epidermis del haz', en: 'Upper (adaxial) epidermis', lat: 'epidermis adaxialis',
+      d: { es: 'Una capa de células transparentes y sin cloroplastos que deja pasar la luz y protege el mesófilo. En el haz suele carecer de estomas.',
+           en: 'A single layer of transparent, chloroplast-free cells letting light through and protecting the mesophyll. On the upper face it usually lacks stomata.' } },
+    empalizada: { es: 'Parénquima en empalizada', en: 'Palisade parenchyma', lat: 'parenchyma palisadeum',
+      d: { es: 'Células alargadas y apretadas bajo el haz, repletas de cloroplastos: aquí ocurre la mayor parte de la fotosíntesis. Por eso el haz es más verde que el envés.',
+           en: 'Elongated, tightly packed cells beneath the upper face, crammed with chloroplasts: most photosynthesis happens here. That is why the haz is greener than the envés.' } },
+    esponjoso: { es: 'Parénquima esponjoso', en: 'Spongy parenchyma', lat: 'parenchyma spongiosum',
+      d: { es: 'Células irregulares con grandes espacios de aire comunicados con los estomas: el laboratorio de intercambio de gases hacia el envés.',
+           en: 'Irregular cells with large interconnected air spaces opening to the stomata: the gas-exchange workshop towards the lower face.' } },
+    aire: { es: 'Espacios de aire', en: 'Air spaces', lat: 'aerenchyma',
+      d: { es: 'Huecos entre las células esponjosas por donde circulan CO₂, O₂ y vapor de agua; desembocan en las cámaras subestomáticas.',
+           en: 'Gaps between spongy cells where CO₂, O₂ and water vapour circulate; they open into the substomatal chambers.' } },
+    haz_vascular: { es: 'Haz vascular (vena)', en: 'Vascular bundle (vein)', lat: 'fasciculus vascularis',
+      d: { es: 'Una vena vista en corte: xilema hacia el haz y floema hacia el envés, envueltos por la vaina del haz. Es la fontanería y el esqueleto de la hoja.',
+           en: 'A vein in section: xylem towards the upper face and phloem towards the lower, wrapped by the bundle sheath. The plumbing and skeleton of the leaf.' } },
+    xilema: { es: 'Xilema', en: 'Xylem', lat: 'xylema',
+      d: { es: 'Conductos muertos y lignificados que traen agua y minerales desde la raíz; en la vena quedan del lado del haz.',
+           en: 'Dead, lignified conduits bringing water and minerals from the root; in the vein they sit towards the upper side.' } },
+    floema: { es: 'Floema', en: 'Phloem', lat: 'phloema',
+      d: { es: 'Células vivas que exportan los azúcares fabricados en la hoja hacia el resto de la planta; quedan del lado del envés.',
+           en: 'Living cells exporting the sugars made in the leaf to the rest of the plant; they sit towards the lower side.' } },
+    estoma: { es: 'Estoma', en: 'Stoma', lat: 'stoma',
+      d: { es: 'Poro regulable por el que entra CO₂ y sale vapor de agua. En la mayoría de las dicotiledóneas abunda en el envés (hoja hipostomática), lejos del sol directo.',
+           en: 'An adjustable pore through which CO₂ enters and water vapour leaves. In most dicots it abounds on the lower face (hypostomatic leaf), away from direct sun.' } },
+    oclusivas: { es: 'Células oclusivas', en: 'Guard cells', lat: 'cellulae claudentes',
+      d: { es: 'El par de células con forma de frijol que abre y cierra el estoma al hincharse o deshincharse; son las únicas células epidérmicas con cloroplastos.',
+           en: 'The pair of bean-shaped cells opening and closing the stoma as they swell or deflate; the only epidermal cells with chloroplasts.' } },
+    camara: { es: 'Cámara subestomática', en: 'Substomatal chamber', lat: 'camera substomatica',
+      d: { es: 'El hueco de aire justo detrás del estoma, donde los gases se reparten hacia el mesófilo.',
+           en: 'The air pocket right behind the stoma, where gases are distributed to the mesophyll.' } },
+    epidermis_enves: { es: 'Epidermis del envés', en: 'Lower (abaxial) epidermis', lat: 'epidermis abaxialis',
+      d: { es: 'La capa que cubre la cara inferior: con más estomas, cutícula más delgada y, en muchas especies, pelos.',
+           en: 'The layer covering the lower face: with more stomata, a thinner cuticle and, in many species, hairs.' } },
+    tricoma: { es: 'Tricoma (pelo)', en: 'Trichome (hair)', lat: 'trichoma',
+      d: { es: 'Pelo epidérmico: refleja el exceso de luz, frena el viento junto a los estomas y estorba a los herbívoros pequeños. Su densidad define términos como pubescente o tomentosa.',
+           en: 'An epidermal hair: it reflects excess light, slows the wind near the stomata and hinders small herbivores. Its density defines terms such as pubescent or tomentose.' } },
   };
 
   /* label positions: [key, xPoint, yPoint, xText, yText, anchor] */
@@ -78,6 +118,22 @@
     ['entrenudo', 1, 84, 40, 84, 'start'],
     ['tallo', -1, 106, -40, 104, 'end'],
   ];
+  const SECTION_LABELS = [
+    ['cuticula', 40, -64, 108, -66, 'start'],
+    ['empalizada', 60, -30, 108, -36, 'start'],
+    ['aire', 20, 16, 108, -8, 'start'],
+    ['camara', 54, 26, 108, 16, 'start'],
+    ['estoma', 54, 40, 108, 40, 'start'],
+    ['oclusivas', 46, 41, 108, 60, 'start'],
+    ['epidermis_haz', -60, -55, -108, -58, 'end'],
+    ['haz_vascular', -40, -14, -108, -28, 'end'],
+    ['xilema', -44, -2, -108, -2, 'end'],
+    ['floema', -41, 12, -108, 22, 'end'],
+    ['esponjoso', -84, 14, -108, 44, 'end'],
+    ['epidermis_enves', -18, 37, -108, 66, 'end'],
+    ['tricoma', -66, 56, -108, 86, 'end'],
+  ];
+
   const GRASS_LABELS = [
     ['laminag', 40, -78, 64, -88, 'start'],
     ['ligula', 6, -19, 46, -30, 'start'],
@@ -108,10 +164,60 @@
       <path d="M8,-19 C 22,-40 40,-64 57,-86 M12,-20 C 26,-38 42,-58 54,-74 M9,-17 C 20,-30 32,-44 44,-58" stroke="var(--lfVein)" stroke-width=".8" fill="none" opacity=".8"/>`;
   }
 
+  /* cross-section of the blade, from cuticle (haz) to trichomes (envés) */
+  function sectionScene() {
+    const S = [];
+    const cell = 'fill="color-mix(in srgb, var(--card-bg) 78%, var(--lfBlade1))" stroke="var(--lfOutline)" stroke-width="0.9"';
+    /* mesophyll background */
+    S.push(`<rect x="-100" y="-62" width="200" height="106" rx="6" fill="color-mix(in srgb, var(--card-bg) 55%, var(--lfBlade1))" stroke="none"/>`);
+    /* cuticles */
+    S.push(`<rect x="-100" y="-66" width="200" height="5" rx="2.5" fill="var(--gold)" opacity="0.75"/>`);
+    S.push(`<rect x="-100" y="44" width="200" height="3.4" rx="1.7" fill="var(--gold)" opacity="0.5"/>`);
+    /* upper epidermis */
+    for (let x = -98; x < 96; x += 16.5) S.push(`<rect x="${x}" y="-61" width="15" height="13" rx="5" ${cell}/>`);
+    /* palisade */
+    for (let x = -96; x < 94; x += 10) {
+      S.push(`<rect x="${x}" y="-47" width="8.4" height="32" rx="3.6" fill="var(--lfBlade2)" stroke="var(--lfOutline)" stroke-width="0.9"/>`);
+      S.push(`<circle cx="${x + 2.6}" cy="${-41}" r="1.3" fill="var(--lfVein)"/><circle cx="${x + 5.6}" cy="${-30}" r="1.3" fill="var(--lfVein)"/><circle cx="${x + 3}" cy="${-21}" r="1.3" fill="var(--lfVein)"/>`);
+    }
+    /* spongy mesophyll: irregular cells, leaving the substomatal chamber empty */
+    let r = 9;
+    for (let y = -8; y < 34; y += 12) {
+      for (let x = -94; x < 96; x += 14) {
+        r = (r * 16807) % 2147483647; const j1 = (r / 2147483647 - 0.5) * 7;
+        r = (r * 16807) % 2147483647; const j2 = (r / 2147483647 - 0.5) * 6;
+        const cx = x + j1, cy = y + j2;
+        if (cx > 38 && cx < 70 && cy > 12) continue;              /* chamber */
+        if (cx > -58 && cx < -22 && cy > -14 && cy < 20) continue; /* bundle */
+        S.push(`<ellipse cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" rx="${(5.4 + (j1 > 0 ? 1.8 : 0)).toFixed(1)}" ry="${(4.6 + (j2 > 0 ? 1.4 : 0)).toFixed(1)}" fill="var(--lfBlade1)" stroke="var(--lfOutline)" stroke-width="0.8" opacity="0.9"/>`);
+      }
+    }
+    /* vascular bundle */
+    S.push(`<ellipse cx="-40" cy="3" rx="19" ry="17" fill="color-mix(in srgb, var(--card-bg) 70%, var(--lfPetiole))" stroke="var(--lfOutline)" stroke-width="1.2"/>`);
+    for (const [dx, rr] of [[-7, 3.4], [0, 4.2], [7, 3.4]]) S.push(`<circle cx="${-40 + dx}" cy="-3" r="${rr}" fill="#e0a55c" stroke="#8a5a28" stroke-width="1"/>`);
+    for (const dx of [-7.5, -2.5, 2.5, 7.5]) S.push(`<circle cx="${-40 + dx}" cy="11" r="2.2" fill="#8fb3d4" stroke="#3f608a" stroke-width="0.8"/>`);
+    /* lower epidermis with the stoma */
+    for (let x = -98; x < 96; x += 16.5) {
+      if (x > 34 && x < 66) continue;
+      S.push(`<rect x="${x}" y="32" width="15" height="12" rx="5" ${cell}/>`);
+    }
+    /* guard cells and pore */
+    S.push(`<ellipse cx="47" cy="38" rx="4.6" ry="6.4" fill="var(--lfBlade2)" stroke="var(--lfOutline)" stroke-width="1"/>`);
+    S.push(`<ellipse cx="59" cy="38" rx="4.6" ry="6.4" fill="var(--lfBlade2)" stroke="var(--lfOutline)" stroke-width="1"/>`);
+    S.push(`<path d="M51.5,36 L54.5,36 M51.5,40 L54.5,40" stroke="var(--lfOutline)" stroke-width="1.2"/>`);
+    /* trichome on the underside */
+    S.push(`<path d="M-66,45 C -70,54 -66,62 -58,68 M-46,45 C -48,52 -45,58 -40,62" stroke="var(--lfVein)" stroke-width="1.6" fill="none" stroke-linecap="round"/>`);
+    /* haz / envés banners */
+    S.push(`<text x="0" y="-80" text-anchor="middle" font-size="10" font-weight="800" fill="var(--primary)">${T('HAZ (cara adaxial) — mira al sol', 'HAZ / upper (adaxial) face — faces the sun')}</text>`);
+    S.push(`<text x="0" y="64" text-anchor="middle" font-size="10" font-weight="800" fill="var(--cB)">${T('ENVÉS (cara abaxial) — mira al suelo', 'ENVÉS / lower (abaxial) face — faces the ground')}</text>`);
+    S.push(`<path d="M-96,-74 l 0,-8 M-96,-74 l 192,0 M96,-74 l 0,-8" stroke="var(--text-muted)" stroke-width="1" fill="none" opacity=".5"/>`);
+    return S.join('');
+  }
+
   function render(stageEl, infoEl, which) {
-    const labels = which === 'grass' ? GRASS_LABELS : DICOT_LABELS;
-    const scene = which === 'grass' ? grassScene() : dicotScene();
-    const vb = which === 'grass' ? '-110 -120 240 240' : '-120 -128 250 260';
+    const labels = which === 'grass' ? GRASS_LABELS : which === 'section' ? SECTION_LABELS : DICOT_LABELS;
+    const scene = which === 'grass' ? grassScene() : which === 'section' ? sectionScene() : dicotScene();
+    const vb = which === 'grass' ? '-110 -120 240 240' : which === 'section' ? '-200 -100 400 200' : '-120 -128 250 260';
     const lab = labels.map(([k, x, y, tx, ty, an]) => `
       <g class="part-label" data-part="${k}">
         <line x1="${x}" y1="${y}" x2="${tx + (an === 'start' ? -3 : 3)}" y2="${ty - 3}"/>
@@ -128,7 +234,7 @@
       g.addEventListener('mouseenter', () => show(g.dataset.part));
       g.addEventListener('click', () => show(g.dataset.part));
     });
-    show(which === 'grass' ? 'vaina' : 'lamina');
+    show(which === 'grass' ? 'vaina' : which === 'section' ? 'empalizada' : 'lamina');
   }
 
   window.Parts = { render, DEFS: P };

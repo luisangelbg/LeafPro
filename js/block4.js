@@ -70,6 +70,15 @@
         P.push(`<circle cx="${bx}" cy="${by}" r="4.6" fill="var(--cC)" opacity=".7"/>`);
         for (const a of [-26, 0, 26]) P.push(put(bx, by, a + 40, 0.62, needleInner));
       }
+    } else if (ph.mode === 'equitant') {
+      /* a fan of folded, sword-shaped leaves in one plane (Iris) */
+      const sword = (a, len, w, dark) => `<g transform="translate(0,118) rotate(${a})">
+        <path d="M0,0 C ${-w},${-len * 0.3} ${-w * 0.8},${-len * 0.72} 0,${-len} C ${w * 0.8},${-len * 0.72} ${w},${-len * 0.3} 0,0 Z"
+          fill="${dark ? 'var(--lfBlade2)' : 'var(--lfBlade1)'}" stroke="var(--lfOutline)" stroke-width="1.3"/>
+        <path d="M0,-4 L0,${-len + 5}" stroke="var(--lfVein)" stroke-width="1" opacity=".65" fill="none"/></g>`;
+      const fan = [[-56, 120], [56, 118], [-38, 160], [38, 158], [-19, 195], [19, 192], [0, 215]];
+      fan.forEach(([a, len], i) => P.push(sword(a, len, 10, i % 2 === 0)));
+      P.push(`<ellipse cx="0" cy="122" rx="26" ry="9" fill="var(--lfPetiole)" stroke="var(--lfOutline)" stroke-width="1"/>`);
     }
     return `<svg viewBox="-110 -150 220 300" class="leaf" role="img">${P.join('')}</svg>`;
   }
@@ -98,6 +107,12 @@
       for (let k = 12; k >= 0; k--) P.push(petal(k * 137.5, 6, 54 - k * 3.2, 12 - k * 0.5));
     } else if (ph.mode === 'fascicle') {
       for (const g of [0, 120, 240]) for (const a of [-14, 0, 14]) P.push(petal(g + a, 12, 46, 3.2));
+    } else if (ph.mode === 'equitant') {
+      /* seen from above the fan is a single flattened row */
+      for (let i = 3; i >= 0; i--) {
+        P.push(petal(90, 6 + i * 13, 13, 4 - i * 0.5));
+        P.push(petal(270, 6 + i * 13, 13, 4 - i * 0.5));
+      }
     }
     return `<svg viewBox="-90 -90 180 180" class="leaf" role="img">${P.join('')}</svg>`;
   }

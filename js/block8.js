@@ -3,18 +3,17 @@
    study sheets built from the atlas. */
 
 (function () {
-  const ALL_CATS = ['forma', 'apice', 'base', 'margen', 'nervadura', 'compo', 'filotaxia', 'union', 'superficie'];
+  const ALL_CATS = ['forma', 'apice', 'base', 'margen', 'nervadura', 'compo', 'filotaxia', 'union', 'superficie', 'modificada', 'duracion'];
   const sel = { cats: ['forma', 'apice', 'base', 'margen'], n: 12, order: 'random' };
   const pres = { items: [], i: 0, revealed: false };
 
   function art(term) {
-    return term.compound ? Leaf.compound(term.compound, {})
-      : term.phyllo ? `<div style="display:flex; gap:10px; align-items:center; justify-content:center">${B4.sideView(term.phyllo)}${B4.topView(term.phyllo)}</div>`
-      : Leaf.svg(term.model, { highlight: term.hl, skin: term.skin });
+    if (term.phyllo) return `<div style="display:flex; gap:10px; align-items:center; justify-content:center">${B4.sideView(term.phyllo)}${B4.topView(term.phyllo)}</div>`;
+    return termArt(term);
   }
   function qText(term) {
     const ch = CHARS[term.cat];
-    return T(`¿Cómo se llama ${({ forma: 'esta forma', apice: 'este ápice', base: 'esta base', margen: 'este margen', nervadura: 'esta nervadura', compo: 'este tipo de hoja', filotaxia: 'esta filotaxia', union: 'esta inserción', superficie: 'esta superficie' })[term.cat]}?`,
+    return T(`¿Cómo se llama ${({ forma: 'esta forma', apice: 'este ápice', base: 'esta base', margen: 'este margen', nervadura: 'esta nervadura', compo: 'este tipo de hoja', filotaxia: 'esta filotaxia', union: 'esta inserción', superficie: 'esta superficie', modificada: 'esta hoja modificada', duracion: 'este tipo de follaje' })[term.cat]}?`,
              `What is this ${ch.one.en} called?`);
   }
 
@@ -134,6 +133,12 @@
         svg .lf-hl{fill:none;stroke-width:3} svg .hl-apice{stroke:#c8741a} svg .hl-base{stroke:#2a7fb8}
         svg .hl-margen{stroke:#c84a6f} svg .hl-forma{stroke:#3f8f4a;stroke-width:2}
         svg.hl-veins .lf-mid, svg.hl-veins .lf-sec{stroke:#8a5cc6}
+        svg .lf-dots.glandulosa circle{fill:#d9a51d;stroke:#2e5a25;stroke-width:.4}
+        svg .lf-dots.lepidota circle{fill:#e8e2cf;stroke:#2e5a25;stroke-width:.5}
+        svg .lf-wrinkle{stroke:#3e7031;opacity:.5;fill:none;stroke-width:.9}
+        svg .lf-gloss{fill:#fff;opacity:.35}
+        .fi .art-duo{display:flex;gap:2mm;justify-content:center}
+        .fi .art-duo svg{height:30mm;width:48%}
         text { fill: #1c241a; }
       </style></head><body>
       <h1>LeafPro · ${exam ? T('Identifica cada lámina', 'Identify each plate') : T('Fichas de estudio', 'Study sheets')} — ${sel.cats.map(c => T(CHARS[c].es, CHARS[c].en)).join(', ')}</h1>

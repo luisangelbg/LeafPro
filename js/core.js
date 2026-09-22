@@ -96,6 +96,8 @@ const CHARS = {
   filotaxia:  { es: 'Filotaxia',          en: 'Phyllotaxy',      one: { es: 'filotaxia', en: 'phyllotaxy' }, v: 'cP' },
   union:      { es: 'Inserción en el tallo', en: 'Attachment',   one: { es: 'inserción', en: 'attachment' }, v: 'cU' },
   superficie: { es: 'Superficie y consistencia', en: 'Surface and texture', one: { es: 'superficie', en: 'surface' }, v: 'cS' },
+  modificada: { es: 'Hojas modificadas', en: 'Modified leaves', one: { es: 'modificación', en: 'modification' }, v: 'cX' },
+  duracion:   { es: 'Duración y variación', en: 'Duration and variation', one: { es: 'duración', en: 'duration' }, v: 'cD' },
 };
 function charColor(key) { const c = CHARS[key]; return c ? `var(--${c.v})` : 'var(--primary)'; }
 

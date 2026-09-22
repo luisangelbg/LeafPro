@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LeafPro — dibujos especiales</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  body { padding: 10px; }
+  .g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .it { border: 1px solid var(--border); border-radius: 8px; padding: 4px; text-align: center; background: var(--card-bg); }
+  .it svg { width: 100%; height: 105px; }
+  .it div { font-size: .6rem; color: var(--text-muted); }
+</style>
+<script src="../js/i18n.js"></script>
+</head>
+<body>
+<div class="g" id="out"></div>
+<script src="../js/core.js"></script>
+<script src="../js/leafgen.js"></script>
+<script src="../js/morphdata.js"></script>
+<script src="../js/block4.js"></script>
+<script src="../js/art.js"></script>
+<script>
+const out = document.getElementById('out');
+let html = '';
+for (const cat of ['modificada', 'duracion']) {
+  for (const t of MORPH.byCat(cat)) html += `<div class="it">${termArt(t)}<div>${t.es}</div></div>`;
+}
+for (const t of ['f-escamiforme', 'u-connata', 'n-transversa', 'n-campilodroma', 'n-semicraspedodroma', 'n-hifodroma', 'a-bilobado', 'm-eroso', 's-rugosa', 's-lustrosa', 's-glandulosa', 's-lepidota', 'f-ensiforme', 'f-subulada', 'f-trulada']) {
+  const term = MORPH.byId(t);
+  html += `<div class="it">${termArt(term)}<div>${term.es}</div></div>`;
+}
+html += `<div class="it">${B4.sideView({mode:'equitant'})}<div>equitante (lado)</div></div>`;
+html += `<div class="it">${B4.topView({mode:'equitant'})}<div>equitante (arriba)</div></div>`;
+out.innerHTML = html;
+</script>
+</body>
+</html>

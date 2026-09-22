@@ -42,14 +42,67 @@
     const terms = MORPH.byCat('union');
     box.innerHTML = `<div class="plate-grid">` + terms.map(term => `
       <div class="plate" data-term="${term.id}" style="--ch:var(--cU)">
-        ${B5.plateSVG(term)}
+        ${termArt(term)}
         <h4>${T(term.es, term.en)}</h4>
         <div class="p-en">${T(term.en, term.es)}</div>
       </div>`).join('') + '</div>';
     els('.plate', box).forEach(p => p.addEventListener('click', () => B5.openTerm(p.dataset.term)));
   }
 
-  function renderAll() { renderDicot(); renderGrass(); renderUnion(); }
+  /* ---- haz and envés: the two faces compared ---- */
+  function renderFaces() {
+    const box = el('b2Faces');
+    const md = { shape: 'ovada', margin: 'entero', venation: 'broquidodroma', base: 'redondeada', apex: 'acuminado', petiole: 0.3 };
+    const haz = Leaf.svg(md, { class: 'face-haz', skin: 'lustrosa' });
+    const enves = Leaf.svg(md, { class: 'face-enves', skin: 'pubescente' });
+    const row = (es, en, h, e) => `<tr><td><b>${T(es, en)}</b></td><td>${h}</td><td>${e}</td></tr>`;
+    box.innerHTML = `
+      <div class="faces-grid">
+        <div class="face-card card">
+          <h3 style="color:var(--primary)">${T('Haz (cara adaxial)', 'Haz — upper (adaxial) face')}</h3>
+          ${haz}
+          <p class="hint">${T('La cara que mira al sol y hacia el tallo cuando la hoja está en la yema.', 'The face looking at the sun, and towards the stem when the leaf sat in the bud.')}</p>
+        </div>
+        <div class="face-card card">
+          <h3 style="color:var(--cB)">${T('Envés (cara abaxial)', 'Envés — lower (abaxial) face')}</h3>
+          ${enves}
+          <p class="hint">${T('La cara que mira al suelo; en ella resaltan las venas y suelen concentrarse estomas y pelos.', 'The face looking at the ground; veins stand out on it, and stomata and hairs usually concentrate there.')}</p>
+        </div>
+      </div>
+      <h2 class="section-title">${T('En qué se diferencian', 'How they differ')}</h2>
+      <div class="table-wrap card"><table class="tbl">
+        <thead><tr><th></th><th style="color:var(--primary)">${T('Haz', 'Upper face')}</th><th style="color:var(--cB)">${T('Envés', 'Lower face')}</th></tr></thead>
+        <tbody>
+          ${row('Color', 'Colour', T('verde más oscuro: la empalizada, llena de cloroplastos, queda justo debajo.', 'darker green: the chloroplast-packed palisade lies right beneath.'), T('verde pálido o blanquecino: domina el tejido esponjoso, lleno de aire.', 'pale or whitish green: the air-filled spongy tissue dominates.'))}
+          ${row('Brillo', 'Shine', T('cutícula más gruesa, a menudo lustrosa.', 'thicker cuticle, often lustrous.'), T('cutícula delgada, aspecto mate.', 'thin cuticle, matt look.'))}
+          ${row('Venas', 'Veins', T('poco salientes, a veces hundidas (hojas rugosas).', 'barely raised, sometimes sunken (rugose leaves).'), T('prominentes y fáciles de seguir: por aquí se estudia la nervadura.', 'prominent and easy to trace: venation is studied from this side.'))}
+          ${row('Estomas', 'Stomata', T('pocos o ninguno en la mayoría de las dicotiledóneas.', 'few or none in most dicots.'), T('abundantes (hoja hipostomática): pierden menos agua lejos del sol directo.', 'abundant (hypostomatic leaf): they lose less water away from direct sun.'))}
+          ${row('Pelos', 'Hairs', T('generalmente escasos.', 'usually sparse.'), T('a menudo densos (tomento) para frenar el viento junto a los estomas.', 'often dense (tomentum), slowing the wind next to the stomata.'))}
+        </tbody>
+      </table></div>
+      <div class="trick"><b>${T('Excepciones que enseñan:', 'Teaching exceptions:')}</b> ${T(
+        'las hojas flotantes (nenúfar) tienen los estomas en el haz, único lado en contacto con el aire; los eucaliptos y magueyes de hoja vertical tienen las dos caras casi iguales (hoja isobilateral, anfistomática); y en el álamo blanco el envés plateado destella con el viento.',
+        'floating leaves (water lilies) carry their stomata on the upper face, the only side touching air; eucalypts and agaves with vertical leaves have both faces almost alike (isobilateral, amphistomatic leaves); and the silvery underside of white poplar flashes in the wind.')}</div>`;
+  }
+
+  /* ---- inside the leaf: interactive cross-section ---- */
+  function renderAnat() {
+    const box = el('b2Anat');
+    box.innerHTML = `
+      <p class="section-sub">${T(
+        'Un corte transversal de la lámina, del haz al envés. Pasa el cursor (o toca) cada etiqueta: el orden de los tejidos explica por qué las dos caras se ven y funcionan distinto.',
+        'A cross-section of the blade, from the upper to the lower face. Hover over (or tap) each label: the order of the tissues explains why the two faces look and work differently.')}</p>
+      <div class="parts-wrap card parts-wide">
+        <div class="parts-stage" id="b2AStage"></div>
+        <div class="part-info" id="b2AInfo"></div>
+      </div>
+      <div class="trick"><b>${T('La ruta de un carbono:', 'The route of one carbon atom:')}</b> ${T(
+        'el CO₂ entra por un estoma del envés, cruza la cámara subestomática y los espacios de aire del esponjoso, se disuelve en la pared húmeda de una célula de la empalizada y ahí la fotosíntesis lo fija; el azúcar resultante sale por el floema de la vena más cercana.',
+        'CO₂ enters through a stoma on the underside, crosses the substomatal chamber and the air spaces of the spongy tissue, dissolves on the moist wall of a palisade cell and is fixed there by photosynthesis; the resulting sugar leaves through the phloem of the nearest vein.')}</div>`;
+    Parts.render(el('b2AStage'), el('b2AInfo'), 'section');
+  }
+
+  function renderAll() { renderDicot(); renderGrass(); renderFaces(); renderAnat(); renderUnion(); }
 
   document.addEventListener('DOMContentLoaded', () => {
     if (!el('b2Dicot')) return;
@@ -57,11 +110,10 @@
     const build = () => { if (!built) { renderAll(); built = true; } };
     document.addEventListener('stepchange', e => { if (e.detail.step === 2) build(); });
     if (location.hash === '#b2') build();
+    const PANES = { dicot: 'b2Dicot', grass: 'b2Grass', faces: 'b2Faces', anat: 'b2Anat', union: 'b2Union' };
     els('#b2Tabs button').forEach(b => b.addEventListener('click', () => {
       els('#b2Tabs button').forEach(x => x.classList.toggle('on', x === b));
-      el('b2Dicot').style.display = b.dataset.tab === 'dicot' ? '' : 'none';
-      el('b2Grass').style.display = b.dataset.tab === 'grass' ? '' : 'none';
-      el('b2Union').style.display = b.dataset.tab === 'union' ? '' : 'none';
+      for (const k in PANES) el(PANES[k]).style.display = b.dataset.tab === k ? '' : 'none';
     }));
     document.addEventListener('langchange', () => { if (built) renderAll(); });
   });
