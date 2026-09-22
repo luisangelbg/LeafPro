@@ -326,7 +326,7 @@ svg.leaf.hl-veins .lf-ter { stroke: var(--cN); opacity: .5; }
 .b6-row > label { font-size: .8rem; font-weight: 700; color: var(--ch, var(--text-muted)); }
 .b6-stage { text-align: center; position: sticky; top: 96px; }
 @media (max-width: 900px) { .b6-stage { position: static; } }
-.b6-stage svg { max-width: 100%; height: min(52vh, 460px); }
+.b6-stage #b6Fig svg { width: 100%; height: auto; max-height: min(64vh, 580px); min-height: 300px; }
 .b6-desc { text-align: left; margin-top: 10px; font-size: .95rem; }
 .b6-desc b { color: var(--primary); }
 .b6-desc .dt { font-weight: 700; }
