@@ -59,19 +59,19 @@
     box.innerHTML = `
       <div class="faces-grid">
         <div class="face-card card">
-          <h3 style="color:var(--primary)">${T('Haz (cara adaxial)', 'Haz — upper (adaxial) face')}</h3>
+          <h3 style="color:var(--primary-text)">${T('Haz (cara adaxial)', 'Haz — upper (adaxial) face')}</h3>
           ${haz}
           <p class="hint">${T('La cara que mira al sol y hacia el tallo cuando la hoja está en la yema.', 'The face looking at the sun, and towards the stem when the leaf sat in the bud.')}</p>
         </div>
         <div class="face-card card">
-          <h3 style="color:var(--cB)">${T('Envés (cara abaxial)', 'Envés — lower (abaxial) face')}</h3>
+          <h3 style="color:var(--cB-text)">${T('Envés (cara abaxial)', 'Envés — lower (abaxial) face')}</h3>
           ${enves}
           <p class="hint">${T('La cara que mira al suelo; en ella resaltan las venas y suelen concentrarse estomas y pelos.', 'The face looking at the ground; veins stand out on it, and stomata and hairs usually concentrate there.')}</p>
         </div>
       </div>
       <h2 class="section-title">${T('En qué se diferencian', 'How they differ')}</h2>
       <div class="table-wrap card"><table class="tbl">
-        <thead><tr><th></th><th style="color:var(--primary)">${T('Haz', 'Upper face')}</th><th style="color:var(--cB)">${T('Envés', 'Lower face')}</th></tr></thead>
+        <thead><tr><th></th><th style="color:var(--primary-text)">${T('Haz', 'Upper face')}</th><th style="color:var(--cB-text)">${T('Envés', 'Lower face')}</th></tr></thead>
         <tbody>
           ${row('Color', 'Colour', T('verde más oscuro: la empalizada, llena de cloroplastos, queda justo debajo.', 'darker green: the chloroplast-packed palisade lies right beneath.'), T('verde pálido o blanquecino: domina el tejido esponjoso, lleno de aire.', 'pale or whitish green: the air-filled spongy tissue dominates.'))}
           ${row('Brillo', 'Shine', T('cutícula más gruesa, a menudo lustrosa.', 'thicker cuticle, often lustrous.'), T('cutícula delgada, aspecto mate.', 'thin cuticle, matt look.'))}

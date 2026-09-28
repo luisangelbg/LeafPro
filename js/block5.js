@@ -50,7 +50,7 @@
     el('b5DlgTitle').innerHTML = `${T(term.es, term.en)} <span class="muted" style="font-weight:400; font-size:.8em; font-style:italic">· ${T(term.en, term.es)}</span>`;
     el('b5DlgArt').innerHTML = plateSVG(term);
     el('b5DlgText').innerHTML = `
-      <p><b style="color:var(--${ch.v})">${T(ch.es, ch.en)}</b></p>
+      <p><b style="color:var(--${ch.v}-text)">${T(ch.es, ch.en)}</b></p>
       <p>${T(term.def.es, term.def.en)}</p>
       <p><b>${T('Ejemplos:', 'Examples:')}</b> ${T(term.ex.es, term.ex.en)}</p>`;
     el('b5DlgBuild').style.display = (term.compound || term.special || term.phyllo) ? 'none' : '';

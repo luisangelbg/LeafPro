@@ -14,7 +14,7 @@
 
   /* a leaf placed at (x, y), pointing `deg` away from vertical, scaled */
   function put(x, y, deg, s, art) {
-    return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${deg.toFixed(1)}) scale(${s.toFixed(3)})">${art || leafInner}</g>`;
+    return `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${deg.toFixed(1)}) scale(${s.toFixed(3)})">${Leaf.fresh(art || leafInner)}</g>`;
   }
 
   /* ---------- side views ---------- */
@@ -160,11 +160,11 @@
           `At ${sim.angle}°, none of the first 60 leaves sits above another: maximum light capture.`);
     box.innerHTML = `
       <div>
-        <div class="b6-row" style="--ch:var(--cP); grid-template-columns:130px 1fr">
+        <div class="b6-row" style="--ch:var(--cP); grid-template-columns:130px minmax(0, 1fr)">
           <label>${T('Ángulo de divergencia', 'Divergence angle')}</label>
           <div class="range-row"><input type="range" id="b4Ang" min="60" max="200" step="0.5" value="${sim.angle}"><b style="min-width:52px">${sim.angle}°</b></div>
         </div>
-        <div class="b6-row" style="--ch:var(--cP); grid-template-columns:130px 1fr">
+        <div class="b6-row" style="--ch:var(--cP); grid-template-columns:130px minmax(0, 1fr)">
           <label>${T('Número de hojas', 'Number of leaves')}</label>
           <div class="range-row"><input type="range" id="b4N" min="5" max="40" step="1" value="${sim.n}"><b style="min-width:52px">${sim.n}</b></div>
         </div>

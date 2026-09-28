@@ -14,6 +14,10 @@
 (function () {
   const TAU = Math.PI * 2;
   let UID = 0;
+  /* a drawing inlined more than once in the same figure gets fresh clip ids on
+     every copy, so no id is repeated in the page and each url(#…) finds its own */
+  let COPY = 0;
+  const fresh = s => { const k = ++COPY; return s.replace(/(id="|url\(#)(lf\d+c)(?=[")])/g, "$1$2_" + k); };
 
   /* ---------------- width profiles (half-width along the midrib) ----------------
      beta(t) is a smooth bump: 1 at the widest point tp, 0 at both ends.
@@ -639,7 +643,7 @@
     const parts = [];
     const defs = '';
     const use = (x, y, ang, s) =>
-      `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(${s.toFixed(3)})">${inner}</g>`;
+      `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(${s.toFixed(3)})">${fresh(inner)}</g>`;
 
     const type = cd.type || 'imparipinnada';
     let W = 200, H = 260;
@@ -887,13 +891,13 @@
       const ad = inner2({ shape: 'lanceolada', venation: 'camptodroma', petiole: 0.15 });
       return `<svg class="leaf special" viewBox="-120 -150 240 290" role="img">
         <path d="M0,132 C 1,60 -1,-30 0,-120" stroke="${C.pet}" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <g transform="translate(-4,110) rotate(-64) scale(0.62)">${juv}</g>
-        <g transform="translate(4,74) rotate(64) scale(0.62)">${juv}</g>
-        <g transform="translate(-4,36) rotate(-64) scale(0.6)">${juv}</g>
-        <g transform="translate(4,-24) rotate(58) scale(0.62)">${ad}</g>
-        <g transform="translate(-4,-58) rotate(-58) scale(0.62)">${ad}</g>
-        <g transform="translate(3,-92) rotate(52) scale(0.58)">${ad}</g>
-        <g transform="translate(-2,-120) rotate(-40) scale(0.55)">${ad}</g>
+        <g transform="translate(-4,110) rotate(-64) scale(0.62)">${fresh(juv)}</g>
+        <g transform="translate(4,74) rotate(64) scale(0.62)">${fresh(juv)}</g>
+        <g transform="translate(-4,36) rotate(-64) scale(0.6)">${fresh(juv)}</g>
+        <g transform="translate(4,-24) rotate(58) scale(0.62)">${fresh(ad)}</g>
+        <g transform="translate(-4,-58) rotate(-58) scale(0.62)">${fresh(ad)}</g>
+        <g transform="translate(3,-92) rotate(52) scale(0.58)">${fresh(ad)}</g>
+        <g transform="translate(-2,-120) rotate(-40) scale(0.55)">${fresh(ad)}</g>
       </svg>`;
     },
   };
@@ -907,7 +911,7 @@
 
   window.Leaf = {
     SHAPES, APICES, BASES, MARGINS, VENATIONS,
-    svg: leafSVG, compound: compoundSVG, special: specialSVG,
+    svg: leafSVG, compound: compoundSVG, special: specialSVG, fresh,
     SPECIAL_NAMES: Object.keys(SPECIALS).filter(k => !k.startsWith('_')),
     _beta: beta, _halfOutline: halfOutline, _veinPaths: veinPaths, _bladeGeometry: bladeGeometry,
   };

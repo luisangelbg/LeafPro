@@ -23,8 +23,8 @@
     const options = shuffle([answer, ...shuffle(terms.filter(x => x !== answer)).slice(0, 3)]);
     const ch = CHARS[cat];
     return {
-      prompt: T(`¿Qué término describe ${cat === 'filotaxia' ? 'esta filotaxia' : cat === 'compo' ? 'esta hoja' : cat === 'modificada' ? 'esta hoja modificada' : cat === 'duracion' ? 'este follaje' : 'este carácter resaltado'}? <span style="color:var(--${ch.v})">(${T(ch.es, ch.en).toLowerCase()})</span>`,
-                `Which term describes ${cat === 'filotaxia' ? 'this phyllotaxy' : cat === 'compo' ? 'this leaf' : cat === 'modificada' ? 'this modified leaf' : cat === 'duracion' ? 'this foliage' : 'the highlighted character'}? <span style="color:var(--${ch.v})">(${T(ch.es, ch.en).toLowerCase()})</span>`),
+      prompt: T(`¿Qué término describe ${cat === 'filotaxia' ? 'esta filotaxia' : cat === 'compo' ? 'esta hoja' : cat === 'modificada' ? 'esta hoja modificada' : cat === 'duracion' ? 'este follaje' : 'este carácter resaltado'}? <span style="color:var(--${ch.v}-text)">(${T(ch.es, ch.en).toLowerCase()})</span>`,
+                `Which term describes ${cat === 'filotaxia' ? 'this phyllotaxy' : cat === 'compo' ? 'this leaf' : cat === 'modificada' ? 'this modified leaf' : cat === 'duracion' ? 'this foliage' : 'the highlighted character'}? <span style="color:var(--${ch.v}-text)">(${T(ch.es, ch.en).toLowerCase()})</span>`),
       fig: art(answer),
       options: options.map(o => ({ txt: T(o.es, o.en), ok: o === answer })),
       exp: `<b>${T(answer.es, answer.en)}:</b> ${T(answer.def.es, answer.def.en)} <i>${T(answer.ex.es, answer.ex.en)}</i>`,
@@ -66,8 +66,8 @@
     const options = shuffle([answer, ...shuffle(terms.filter(x => x !== answer)).slice(0, 3)]);
     const ch = CHARS[cat];
     return {
-      prompt: T(`Observa la hoja completa (sin resaltados). ¿Cómo es su <b style="color:var(--${ch.v})">${CHARS[cat].one.es}</b>?`,
-                `Look at the whole leaf (no highlights). What is its <b style="color:var(--${ch.v})">${CHARS[cat].one.en}</b>?`),
+      prompt: T(`Observa la hoja completa (sin resaltados). ¿Cómo es su <b style="color:var(--${ch.v}-text)">${CHARS[cat].one.es}</b>?`,
+                `Look at the whole leaf (no highlights). What is its <b style="color:var(--${ch.v}-text)">${CHARS[cat].one.en}</b>?`),
       fig: Leaf.svg(md, {}),
       options: options.map(o => ({ txt: T(o.es, o.en), ok: o === answer })),
       exp: `<b>${T(answer.es, answer.en)}:</b> ${T(answer.def.es, answer.def.en)}`,
@@ -158,7 +158,7 @@
   let selCats = [...QUIZ_CATS];
   function renderModes() {
     const box = el('q7Modes');
-    const chips = QUIZ_CATS.map(c => `<button class="chip${selCats.includes(c) ? ' on' : ''}" data-c="${c}" style="${selCats.includes(c) ? `border-color:var(--${CHARS[c].v}); color:var(--${CHARS[c].v})` : ''}">${T(CHARS[c].es, CHARS[c].en)}</button>`).join('');
+    const chips = QUIZ_CATS.map(c => `<button class="chip${selCats.includes(c) ? ' on' : ''}" data-c="${c}" style="${selCats.includes(c) ? `border-color:var(--${CHARS[c].v}); color:var(--${CHARS[c].v}-text)` : ''}">${T(CHARS[c].es, CHARS[c].en)}</button>`).join('');
     box.innerHTML = `
       <div class="card" style="grid-column:1/-1">
         <b>${T('Caracteres a practicar:', 'Characters to practise:')}</b>
