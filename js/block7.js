@@ -120,6 +120,8 @@
       else if (j === i) b.classList.add('bad');
     });
     el('q7Exp').innerHTML = `<div class="q-exp">${ok ? '✅ ' : '❌ '} ${q.exp}</div>`;
+    /* the correction is read aloud to screen readers */
+    if (window.LABG) LABG.messageRole(el('q7Exp').firstElementChild, 'info');
     const nx = el('q7Next');
     nx.style.display = '';
     nx.focus();

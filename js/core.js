@@ -67,8 +67,13 @@ function goStep(n, opts) {
   els('.step-btn').forEach(b => b.classList.toggle('active', b.dataset.step === n));
   document.body.classList.toggle('on-home', n === '1');
   if (!(opts && opts.keepScroll)) window.scrollTo({ top: 0, behavior: 'smooth' });
-  const btn = document.querySelector('.step-btn[data-step="' + n + '"]');
-  if (btn && btn.scrollIntoView) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  const btn = stepBtn(n);
+  if (window.LABG) {
+    LABG.setCurrentStep(n);
+    /* the first block shown on opening is not announced: nothing changed yet */
+    if (btn && !(opts && opts.fromHash && opts.keepScroll)) LABG.announce(T('Bloque ', 'Block ') + stepName(n));
+  } else if (btn && btn.scrollIntoView) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  refreshStepFooters();
   if (!(opts && opts.fromHash)) { try { history.replaceState(null, '', '#b' + n); } catch (e) { /* file:// in some browsers */ } }
   document.dispatchEvent(new CustomEvent('stepchange', { detail: { step: Number(n) } }));
 }
@@ -82,6 +87,76 @@ function stepFromHash() {
   const m = /^#b(\d)/.exec(location.hash || '');
   return m ? m[1] : '1';
 }
+
+/* ---------------- common bar of the LABG Suite ----------------
+   Every call to labg-core.js is guarded: the test pages load this file
+   without it.
+
+   No block is ever marked as done: LeafPro is a teaching app in which the
+   eight blocks are open from the start and none of them produces a result
+   that the others need (there is no data to load, no analysis to finish),
+   so a "done" tick would mean nothing. For the same reason there is no
+   warning before closing the page: nothing the user does can be lost (the
+   preferences are saved as they change). */
+const stepBtn = n => document.querySelector('.step-btn[data-step="' + String(n) + '"]');
+function stepName(n) {
+  const s = STEPS.find(x => String(x.n) === String(n));
+  return s ? s.n + ' · ' + T(s.es, s.en) : String(n);
+}
+
+/* Footer of every block: Previous / Next, with the name of the block. Both
+   languages are written side by side (L2), so a change of language needs no
+   redraw. The buttons carry data-to, not data-go: data-go is wired globally
+   when the page loads. */
+function refreshStepFooters() {
+  if (!window.LABG) return;
+  els('.step-panel').forEach(p => {
+    const n = Number(p.id.replace('panel-', ''));
+    const i = STEPS.findIndex(s => s.n === n);
+    if (i < 0) return;
+    let f = p.querySelector(':scope > .step-footer');
+    if (!f) {
+      f = mk('nav', { class: 'step-footer no-print' });
+      f.innerHTML = '<button type="button" class="btn btn-secondary prev"></button><button type="button" class="btn btn-primary next"></button>';
+      f.addEventListener('click', e => { const b = e.target.closest('button[data-to]'); if (b && !b.disabled) goStep(b.dataset.to); });
+      p.appendChild(f);
+    }
+    f.setAttribute('aria-label', T('Bloques', 'Blocks'));
+    const prev = STEPS[i - 1], next = STEPS[i + 1];
+    const label = s => L2(s.n + ' · ' + s.es, s.n + ' · ' + s.en);
+    const bp = f.querySelector('.prev'), bn = f.querySelector('.next');
+    bp.hidden = !prev;
+    if (prev) { bp.dataset.to = prev.n; bp.innerHTML = `← <span><small>${L2('Anterior', 'Previous')}</small>${label(prev)}</span>`; }
+    bn.hidden = !next;
+    if (next) { bn.dataset.to = next.n; bn.innerHTML = `<span><small>${L2('Siguiente', 'Next')}</small>${label(next)}</span> →`; }
+  });
+}
+
+/* Theme button and block bar: labels that depend on the theme and the language */
+function paintCommonBar() {
+  if (!window.LABG) return;
+  LABG.theme.key = 'leafpro:theme';
+  LABG.theme.paint();
+  const nav = el('stepper');
+  if (nav) nav.setAttribute('aria-label', T('Bloques', 'Blocks'));
+}
+
+/* Wired after every DOMContentLoaded handler has run, so the block bar
+   exists and the other modules have registered their own keys first. */
+document.addEventListener('DOMContentLoaded', () => setTimeout(() => {
+  if (!window.LABG) return;
+  const hb = el('helpBtn');
+  if (hb) hb.addEventListener('click', () => LABG.showShortcuts());
+  LABG.shortcuts([]);
+  /* the classroom presentation (Block 8) keeps the arrows for itself */
+  LABG.bindStepKeys(goStep);
+  const cur = document.querySelector('.step-btn.active');
+  LABG.setCurrentStep(cur ? cur.dataset.step : '1');
+  document.addEventListener('themechange', paintCommonBar);
+  document.addEventListener('langchange', paintCommonBar);
+  paintCommonBar();
+  refreshStepFooters();
+}, 0));
 
 /* ---------------- the characters of the leaf ----------------
    Each character keeps one colour everywhere in the app (parts diagram,

@@ -52,7 +52,10 @@
       });
       const t = document.querySelector('title');
       if (t && t.dataset.es) document.title = t.getAttribute('data-' + L);
-      document.querySelectorAll('.lang-seg button').forEach(b => b.classList.toggle('on', b.dataset.lang === L));
+      document.querySelectorAll('.lang-seg button').forEach(b => {
+        b.classList.toggle('on', b.dataset.lang === L);
+        b.setAttribute('aria-pressed', b.dataset.lang === L ? 'true' : 'false');
+      });
     },
   };
 

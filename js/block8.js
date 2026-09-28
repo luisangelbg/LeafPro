@@ -160,8 +160,9 @@
     document.addEventListener('keydown', e => {
       if (!el('clFull').classList.contains('on')) return;
       if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); reveal(); }
-      else if (e.key === 'ArrowRight' || e.key === 'PageDown') next();
-      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') prev();
+      /* preventDefault: Alt + arrows must not also change the block behind the presentation */
+      else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); next(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
       else if (e.key === 'Escape') exitPres();
     });
   });
