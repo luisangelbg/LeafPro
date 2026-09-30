@@ -223,7 +223,11 @@
     buildControls();
     draw();
     el('b6Random').addEventListener('click', randomLeaf);
-    el('b6Export').addEventListener('click', exportSVG);
+    /* the download ends in the suite's «✓ Done» on the button */
+    el('b6Export').addEventListener('click', e => {
+      if (window.LABG && LABG.busyButton) LABG.busyButton(e.currentTarget, exportSVG).catch(err => console.error(err));
+      else exportSVG();
+    });
     document.addEventListener('langchange', () => { buildControls(); draw(); });
   });
 

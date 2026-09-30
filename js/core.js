@@ -141,6 +141,21 @@ function paintCommonBar() {
   if (nav) nav.setAttribute('aria-label', T('Bloques', 'Blocks'));
 }
 
+/* the suite's work window: this app has no long calculations, but the scene
+   and the tips stay ready for any wait (the tests load this file without
+   labg-core.js, hence the check) */
+if (window.LABG && LABG.work) {
+  LABG.work.scene = 'grow';
+  LABG.work.tips = [
+    ['Cada carácter de la hoja conserva su color en toda la app: partes, atlas, constructor y autoevaluación.',
+     'Each leaf character keeps its colour throughout the app: parts, atlas, builder and self-assessment.'],
+    ['En «Arma una hoja», el botón «Hoja al azar» propone una combinación nueva y «Descargar SVG» guarda el dibujo.',
+     'In “Build a leaf”, the “Random leaf” button proposes a new combination and “Download SVG” saves the drawing.'],
+    ['En el modo clase, las flechas del teclado pasan de una lámina a otra.',
+     'In classroom mode, the arrow keys move from one plate to the next.'],
+  ];
+}
+
 /* Wired after every DOMContentLoaded handler has run, so the block bar
    exists and the other modules have registered their own keys first. */
 document.addEventListener('DOMContentLoaded', () => setTimeout(() => {
