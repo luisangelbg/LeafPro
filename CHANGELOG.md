@@ -1,5 +1,24 @@
 # Cambios de LeafPro
 
+## 1.2.0 — 14 de octubre de 2026
+
+LeafPro se une a la LABG Suite y queda publicada en línea
+(https://luisangelbg.github.io/LeafPro/):
+
+- Barra y navegación comunes de la suite (labg-base), con el enlace a la
+  suite, el buscador de bloques del **navegador LABG 1.0.0** y el enlace
+  «Reportar un problema» que abre un reporte en GitHub con app, bloque y
+  navegador.
+- **Marca LABG oro y negro**: isotipo hexagonal, botones y barra de bloques
+  en oro, y esperas animadas que terminan en palomita sobre el isotipo.
+- **Estudio de figuras LABG 1.3.0**: exportación nativa con vista previa a
+  tamaño de salida, inspector por pestañas, títulos desde el rótulo de cada
+  figura y leyenda ubicable.
+- Accesibilidad: contraste AA en el texto de acento, tablas con
+  desplazamiento legibles para lectores de pantalla y mejoras del Bloque 6.
+- Publicación: repositorio en GitHub con Pages y ficha en el portal de la
+  suite (categoría «Botánica para el aula»).
+
 ## 1.1.0 — 21 de septiembre de 2026
 
 La hoja por dentro y muchos más términos, con la terminología cotejada contra el

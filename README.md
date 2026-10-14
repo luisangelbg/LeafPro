@@ -9,11 +9,13 @@ filotaxia con un simulador del ángulo de oro, un atlas de **más de 140 términ
 ápices, bases, márgenes, nervaduras según Hickey y Ellis, composición, filotaxia, inserción, superficies, **hojas
 modificadas** —zarcillos, espinas, brácteas, espatas, catafilos, filodios, jarras y trampas— y **duración del
 follaje**), un constructor de hojas con descripción botánica redactada, autoevaluación generativa y un modo clase
-para proyectar e imprimir. Los ocho bloques están completos (versión 1.1.0).
+para proyectar e imprimir. Los ocho bloques están completos (versión 1.2.0).
 
 Todos los dibujos los genera un **motor paramétrico de hojas** dentro de la propia aplicación: cada término del atlas,
 cada hoja del constructor y cada pregunta de la autoevaluación se dibujan al momento a partir de un modelo
 (forma × ápice × base × margen × lobulación × nervadura), no hay fotografías ni imágenes fijas.
+
+**Versión en línea:** https://luisangelbg.github.io/LeafPro/
 
 *English summary below.*
 
